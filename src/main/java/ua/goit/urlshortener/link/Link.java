@@ -1,8 +1,10 @@
 package ua.goit.urlshortener.link;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ua.goit.urlshortener.user.User;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "links")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Link {
     private static final int VALID_DAYS = 30;
 

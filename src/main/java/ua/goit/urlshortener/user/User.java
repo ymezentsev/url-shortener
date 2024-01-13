@@ -2,6 +2,7 @@ package ua.goit.urlshortener.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import ua.goit.urlshortener.link.Link;
 
 import java.util.ArrayList;
@@ -29,5 +30,6 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Link> links = new ArrayList<>();
 }
