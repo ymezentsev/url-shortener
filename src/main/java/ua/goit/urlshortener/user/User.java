@@ -3,7 +3,7 @@ package ua.goit.urlshortener.user;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
-import ua.goit.urlshortener.link.Link;
+import ua.goit.urlshortener.url.Url;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +31,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @ToString.Exclude
-    private List<Link> links = new ArrayList<>();
+    private List<Url> urls = new ArrayList<>();
 }

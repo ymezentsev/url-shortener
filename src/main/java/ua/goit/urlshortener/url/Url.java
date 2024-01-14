@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.link;
+package ua.goit.urlshortener.url;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-@Table(name = "links")
+@Table(name = "urls")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Link {
+public class Url {
     private static final int VALID_DAYS = 30;
 
     @Id
@@ -47,14 +47,14 @@ public class Link {
         this.visitCount++;
     }
 
-    public static LinkDto buildLinkDto(Link link){
-        return LinkDto.builder()
-                .url(link.getUrl())
-                .shortUrl(link.getShortUrl())
-                .username(link.getUser().getUsername())
-                .createdDate(link.getCreatedDate())
-                .expirationDate(link.getExpirationDate())
-                .visitCount(link.getVisitCount())
+    public static UrlDto buildUrlDto(Url url){
+        return UrlDto.builder()
+                .url(url.getUrl())
+                .shortUrl(url.getShortUrl())
+                .username(url.getUser().getUsername())
+                .createdDate(url.getCreatedDate())
+                .expirationDate(url.getExpirationDate())
+                .visitCount(url.getVisitCount())
                 .build();
     }
 }

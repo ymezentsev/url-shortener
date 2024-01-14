@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.link;
+package ua.goit.urlshortener.url;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-public class LinkDto {
+public class UrlDto {
     private String shortUrl;
     private String url;
     private String username;

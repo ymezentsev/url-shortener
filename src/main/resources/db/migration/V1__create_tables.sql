@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     role     VARCHAR(20)  NOT NULL DEFAULT 'USER'
 );
 
-CREATE TABLE IF NOT EXISTS links (
+CREATE TABLE IF NOT EXISTS urls (
     short_url       VARCHAR(8) PRIMARY KEY CHECK (length(short_url) = 8),
     url             VARCHAR(255) NOT NULL,
     user_id         BIGSERIAL    NOT NULL,
