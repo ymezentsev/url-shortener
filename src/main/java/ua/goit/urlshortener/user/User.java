@@ -1,6 +1,7 @@
 package ua.goit.urlshortener.user;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import ua.goit.urlshortener.url.Url;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Builder
 @Entity
 @Table (name = "users")
 public class User {
