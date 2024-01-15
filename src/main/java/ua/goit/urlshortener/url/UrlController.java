@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/url")
+@RequestMapping("V1/url")
 @RequiredArgsConstructor
 public class UrlController {
     private final UrlService urlService;

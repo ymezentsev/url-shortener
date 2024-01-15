@@ -108,5 +108,4 @@ public class UrlService {
             urlRepository.deleteById(shotUrl);
         }
     }
-
 }

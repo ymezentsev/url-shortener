@@ -14,5 +14,4 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(()->new NoSuchElementException("User not found"));
     }
-
 }
