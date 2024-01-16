@@ -19,7 +19,7 @@ public class UrlService {
     private static final int DAYS_TO_EXTENDS = 30;
     private final UrlRepository urlRepository;
     private final UserService userService;
-    private final ShortUrlkGenerator shortUrlkGenerator;
+    private final ShortUrlGenerator shortUrlGenerator;
 
     public void createUrl(CreateShotUrlRequest createShotUrlRequest, String username) {
         String originalUrl = createShotUrlRequest.getOriginalUrl();
@@ -35,7 +35,7 @@ public class UrlService {
         User user = userService.findByUsername(username);
 
         Url newUrl = Url.builder()
-                .shortUrl(shortUrlkGenerator.generateShortUrl())
+                .shortUrl(shortUrlGenerator.generateShortUrl())
                 .url(originalUrl)
                 .user(user)
                 .visitCount(0)
