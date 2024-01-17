@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Duration;
 import java.util.Date;
 
 @Slf4j
@@ -18,8 +19,8 @@ public class JwtUtils {
     @Value("${jwt.secretKey}")
     private String jwtSecret;
 
-    @Value("${jwt.ExpirationMs}")
-    private int jwtExpirationMs;
+    @Value("${jwt.lifetime}")
+    private Duration jwtLifetime;
 
     public String generateJwtToken(Authentication authentication) {
 
@@ -29,7 +30,7 @@ public class JwtUtils {
                 .subject((userDetails.getUsername()))
                 .claim("Authorities", userDetails.getAuthorities())
                 .issuedAt(new Date())
-                .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .expiration(new Date((new Date()).getTime() + jwtLifetime.toMillis()))
                 .signWith(key())
                 .compact();
     }

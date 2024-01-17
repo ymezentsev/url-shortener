@@ -6,7 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -15,15 +14,15 @@ import java.util.List;
 public class UrlController {
     private final UrlService urlService;
 
+    @GetMapping("/all")
+    public List<UrlDto> getAllUrls(){
+        return urlService.getAllUrls();
+    }
+
     @PostMapping("/create")
     public void createShortUrl(@RequestBody CreateShotUrlRequest createShotUrlRequest){
         UserDetails principal = getUserDetails();
         urlService.createUrl(createShotUrlRequest, principal.getUsername());
-    }
-
-    @GetMapping("/all")
-    public List<UrlDto> getAllUrls(){
-        return urlService.getAllUrls();
     }
 
     @GetMapping("/all/user")
