@@ -52,6 +52,11 @@ public class JwtSecurityConfiguration {
     }
 
     @Bean
+    void test(){
+        System.out.println("tets");
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
