@@ -1,9 +1,7 @@
 package ua.goit.urlshortener.user;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import ua.goit.urlshortener.url.Url;
 
 import java.util.ArrayList;
@@ -13,6 +11,8 @@ import java.util.List;
 @Builder
 @Entity
 @Table (name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

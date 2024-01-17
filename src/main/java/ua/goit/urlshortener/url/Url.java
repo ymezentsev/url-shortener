@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Url {
-    private static final int VALID_DAYS = 30;
+    public static final int VALID_DAYS = 30;
 
     @Id
     private String shortUrl;

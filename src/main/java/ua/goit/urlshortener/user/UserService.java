@@ -1,8 +1,13 @@
 package ua.goit.urlshortener.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.goit.urlshortener.user.exception.UserAlreadyExistException;
+import ua.goit.urlshortener.jwt.JwtUtils;
 
 import java.util.NoSuchElementException;
 
@@ -10,8 +15,9 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    //TODO change when add JWT
-    //private final PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
+    private final JwtUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
@@ -28,11 +34,18 @@ public class UserService {
 
         User user = User.builder()
                 .username(username)
-                //TODO change when add JWT
-                //.password(encoder.encode(password))
-                .password(password)
+                .password(encoder.encode(password))
                 .role(Role.USER)
                 .build();
         userRepository.save(user);
+    }
+
+    public String loginUser(CreateUserRequest userRequest) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        userRequest.getUsername(), userRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return jwtUtils.generateJwtToken(authentication);
     }
 }

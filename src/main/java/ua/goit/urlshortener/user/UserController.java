@@ -18,9 +18,8 @@ public class UserController {
         userService.registerUser(userRequest);
     }
 
-/*    @PostMapping("/login")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody CreateUserRequest userRequest) {
-     //   return ResponseEntity.ok(userService.loginUser(userRequest));
-    }*/
-
+    @PostMapping("/login")
+    public String loginUser(@Valid @RequestBody CreateUserRequest userRequest) {
+        return userService.loginUser(userRequest);
+    }
 }

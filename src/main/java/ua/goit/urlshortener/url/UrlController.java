@@ -1,8 +1,12 @@
 package ua.goit.urlshortener.url;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -13,8 +17,8 @@ public class UrlController {
 
     @PostMapping("/create")
     public void createShortUrl(@RequestBody CreateShotUrlRequest createShotUrlRequest){
-        String username = "user";
-        urlService.createUrl(createShotUrlRequest, username);
+        UserDetails principal = getUserDetails();
+        urlService.createUrl(createShotUrlRequest, principal.getUsername());
     }
 
     @GetMapping("/all")
@@ -24,20 +28,20 @@ public class UrlController {
 
     @GetMapping("/all/user")
     public List<UrlDto> getAllUsersUrls(){
-        Long userId = 2L;
-        return urlService.getAllUsersUrls(userId);
+        UserDetails principal = getUserDetails();
+        return urlService.getAllUsersUrls(principal.getUsername());
     }
 
     @GetMapping("/all/user/active")
     public List<UrlDto> getAllUsersActiveUrls(){
-        Long userId = 2L;
-        return urlService.getAllUsersActiveUrls(userId);
+        UserDetails principal = getUserDetails();
+        return urlService.getAllUsersActiveUrls(principal.getUsername());
     }
 
     @GetMapping("/all/user/not_active")
     public List<UrlDto> getAllUsersNotActiveUrls(){
-        Long userId = 2L;
-        return urlService.getAllUsersNotActiveUrls(userId);
+        UserDetails principal = getUserDetails();
+        return urlService.getAllUsersNotActiveUrls(principal.getUsername());
     }
 
     @GetMapping("/{shotUrl}")
@@ -47,6 +51,12 @@ public class UrlController {
 
     @DeleteMapping("/delete/{shotUrl}")
     public void deleteByShotUrl(@PathVariable("shotUrl") String shotUrl){
-        urlService.deleteByShotUrl(shotUrl);
+        UserDetails principal = getUserDetails();
+        urlService.deleteByShotUrl(principal.getUsername(), shotUrl);
+    }
+
+    private UserDetails getUserDetails() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        return (UserDetails) context.getAuthentication().getPrincipal();
     }
 }

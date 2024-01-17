@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.user.exception;
+package ua.goit.urlshortener.user;
 
 public class UserAlreadyExistException extends RuntimeException {
 
