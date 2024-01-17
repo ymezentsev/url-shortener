@@ -70,4 +70,8 @@ public class JwtSecurityConfiguration {
                 .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+    void method (){
+        System.out.println("sdfsdf");
+    }
 }
