@@ -52,11 +52,6 @@ public class JwtSecurityConfiguration {
     }
 
     @Bean
-    void test(){
-        System.out.println("tets");
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
@@ -69,9 +64,5 @@ public class JwtSecurityConfiguration {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
-
-    void method (){
-        System.out.println("sdfsdf");
     }
 }
