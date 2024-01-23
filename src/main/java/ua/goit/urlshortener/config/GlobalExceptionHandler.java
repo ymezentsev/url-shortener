@@ -4,12 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ua.goit.urlshortener.error.AppError;
-import ua.goit.urlshortener.user.UserAlreadyExistException;
+import ua.goit.urlshortener.url.exceptions.AlreadyExistUrlException;
+import ua.goit.urlshortener.url.exceptions.NotAccessibleException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,10 +31,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserAlreadyExistException.class)
-    public ResponseEntity<AppError> handleUserAlreadyExistException(UserAlreadyExistException e) {
+    @ExceptionHandler(AlreadyExistUrlException.class)
+    public ResponseEntity<AppError> handleAlreadyExistUrlException(AlreadyExistUrlException e){
         log.error(e.getMessage(), e);
-        return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new AppError(HttpStatus.CONFLICT.value(), e.getMessage()), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<AppError> handleAccessDeniedException(AccessDeniedException e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(new AppError(HttpStatus.FORBIDDEN.value(), e.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NotAccessibleException.class)
+    public ResponseEntity<AppError> handleNotAccessibleException(NotAccessibleException e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -51,10 +65,10 @@ public class GlobalExceptionHandler {
         return errorResponse;
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<AppError> handleAccessDeniedException(AccessDeniedException e) {
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<AppError> handleUsernameNotFoundException(UsernameNotFoundException e) {
         log.error(e.getMessage(), e);
-        return new ResponseEntity<>(new AppError(HttpStatus.FORBIDDEN.value(), e.getMessage()), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
