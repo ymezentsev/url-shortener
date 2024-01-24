@@ -46,7 +46,7 @@ class UrlWebControllerTest {
     UrlWebController urlWebController;
 
     @BeforeEach
-    void setUp() {
+    void setUp(){
         RestAssured.baseURI = "http://localhost:" + port + "/V2/urls";
     }
 
@@ -99,7 +99,7 @@ class UrlWebControllerTest {
         ModelAndView result = urlWebController.getAllInactiveLinks();
 
         assertEquals("all-guest", result.getViewName());
-        assertTrue(result.getModel().containsKey("userUrls"));
+        assertTrue(result.getModel().containsKey("userUrlsInactive"));
         assertEquals(0, urlService.getInactiveUrl().size());
     }
 
@@ -235,7 +235,7 @@ class UrlWebControllerTest {
         assertNotNull(usernameAttribute);
         assertEquals("testadmin", usernameAttribute);
 
-        assertTrue(model.getModel().containsKey("userUrls"));
+        assertTrue(model.getModel().containsKey("userUrlsInactive"));
         assertEquals(0, urlService.getInactiveUrlUser("testadmin").size());
     }
 
@@ -270,8 +270,8 @@ class UrlWebControllerTest {
         String createdString = "2024-01-18 12:34:56";
         String expirationString = "2024-02-18 12:34:56";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDate created = LocalDate.parse(createdString, formatter);
-        LocalDate expiration = LocalDate.parse(expirationString, formatter);
+        LocalDate created = LocalDate.parse(createdString,formatter);
+        LocalDate expiration = LocalDate.parse(expirationString,formatter);
 
         UrlDto urlDto = new UrlDto(1L, "testurl1", "https://some_long_named_portal.com/", "for test only", "testadmin", created, expiration, 1);
         assertEquals(urlDto, urlService.getById(1L));
@@ -301,8 +301,8 @@ class UrlWebControllerTest {
         String createdString = "2024-01-18 12:34:56";
         String expirationString = "2024-02-18 12:34:56";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDate created = LocalDate.parse(createdString, formatter);
-        LocalDate expiration = LocalDate.parse(expirationString, formatter);
+        LocalDate created = LocalDate.parse(createdString,formatter);
+        LocalDate expiration = LocalDate.parse(expirationString,formatter);
         UrlDto editedUrlDto = new UrlDto(1L, "edited12", "https://www.google.com/", "Edited", "testadmin", created, expiration, 1);
         assertEquals(editedUrlDto, urlService.getById(1L));
     }
@@ -327,7 +327,7 @@ class UrlWebControllerTest {
         assertEquals(expirationDateProlonged, expirationDate.plusDays(10));
     }
 
-    @Test
+@Test
     @DisplayName("Delete link")
     void delete() {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
