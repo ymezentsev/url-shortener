@@ -111,8 +111,16 @@
                 <a href="/V2/urls/create" class="btn btn-success btn-lg">Create ShortLink</a>
             </div>
 
-            <div class="col">
+            <div class="col" sec:authorize="hasAuthority('USER')">
                 <a href="/V2/urls/list/auth" class="btn btn-success btn-lg">All links</a>
+            </div>
+
+            <div class="col" sec:authorize="hasAuthority('ADMIN')">
+                <a href="/V2/admin/urls" class="btn btn-success btn-lg">All links</a>
+            </div>
+
+            <div class="col" sec:authorize="hasAuthority('ADMIN')">
+                <a href="/V2/admin/users" class="btn btn-success btn-lg">All users</a>
             </div>
         </div>
     </div>

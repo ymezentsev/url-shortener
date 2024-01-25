@@ -90,8 +90,16 @@
                 <a href="/V2/user/login" class="btn btn-success btn-lg">Log in</a>
             </div>
 
-            <div class="col mt-4">
+            <div class="col mt-4" sec:authorize="isAnonymous() or hasAuthority('USER')">
                 <a href="/V2/urls/list" class="btn btn-success btn-lg">All links</a>
+            </div>
+
+            <div class="col mt-4" sec:authorize="hasAuthority('ADMIN')">
+                <a href="/V2/admin/urls" class="btn btn-success btn-lg">All links</a>
+            </div>
+
+            <div class="col mt-4" sec:authorize="hasAuthority('ADMIN')">
+                <a href="/V2/admin/users" class="btn btn-success btn-lg">All users</a>
             </div>
 
             <div class="col mt-4" sec:authorize="isAuthenticated()">
