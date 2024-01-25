@@ -9,20 +9,14 @@ limited time life.
 
 - Spring Boot
 - Spring Data
+- Spring MVC
 - PostgreSQL
 - FlyWay
 - OpenApi 3.0 (Swagger)
 - JWT
-- Mockito
-- CI pipeline (GitHub actions)
+- JUnit 5
 - Docker
-- Docker-compose
-
-
-During the development process, two profiles were used. `dev` for design purposes
-(a local version of the H2 database was used for simplicity and testing),
-and the `prod` for production (utilizing PostgreSQL and docker-compose).
-
+- Testcontainers
 
 Generated OpenApi documentation avaliable (when app running) [Swagger-ui](http://localhost:8080/swagger-ui.html) and
 [OAS](http://localhost:8080/v3/api-docs)
@@ -30,14 +24,15 @@ Generated OpenApi documentation avaliable (when app running) [Swagger-ui](http:/
 
 ## About the team members
 
+
+### Yurii Mezentsev
+- __[GitHub](https://github.com/ymezentsev)__
+
 ### Taras Nakonechnyi
 - __[GitHub](https://github.com/TarCarbon)__
 
 ### Maria Kasian
 - __[GitHub](https://github.com/mariakasian)__
-
-### Yurii Mezentsev
-- __[GitHub](https://github.com/ymezentsev)__
 
 ### Marian Hricyk
 - __[GitHub](https://github.com/Marian-Hricyk)__
