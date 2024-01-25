@@ -28,7 +28,7 @@ public class UrlWebController {
 
     @GetMapping("/user")
     public ModelAndView getIndexPageForUser(Principal principal) {
-        ModelAndView result = new ModelAndView("index-user");
+        ModelAndView result = new ModelAndView("index");
         result.addObject("username", principal.getName());
         return result;
     }
