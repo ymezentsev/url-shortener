@@ -2,7 +2,6 @@ package ua.goit.urlshortener.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ua.goit.urlshortener.user.UserEntity;
 
 import java.util.Optional;
 

@@ -1,8 +1,6 @@
 package ua.goit.urlshortener.user;
 
 import org.springframework.stereotype.Component;
-import ua.goit.urlshortener.user.UserEntity;
-import ua.goit.urlshortener.user.UserDto;
 
 @Component
 public class UserMapper {
