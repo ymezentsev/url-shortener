@@ -53,7 +53,6 @@ public final class CookieAuthJwtTokenFilter extends OncePerRequestFilter {
                 Authentication authentication = authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(username, password));
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 String token = jwtUtils.generateJwtToken(authentication);
 
                 Cookie jwtCookie = new Cookie("jwtToken", token);
@@ -78,7 +77,6 @@ public final class CookieAuthJwtTokenFilter extends OncePerRequestFilter {
             if (jwtTokenCookie.isPresent()) {
                 log.info("JWT TOKEN IS PRESENT");
                 jwtFromCookie = jwtTokenCookie.get().getValue();
-                log.info("TOKEN FROM COOKIE " + jwtFromCookie);
                 String extractUsername;
                 try {
                     extractUsername = jwtUtils.getUsernameFromJwtToken(jwtFromCookie);
