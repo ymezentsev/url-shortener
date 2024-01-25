@@ -13,15 +13,11 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
                 version = "1.0.0",
                 contact = @Contact(
                         name = "GitHub",
-                        url = "https://github.com/TarCarbon/URL-Shortener"
+                        url = "https://github.com/ymezentsev/url-shortener"
                 )
         )
 )
 
-// Ця секція потрібна якщо наше API захищено авторизацієй з JWT.
-// Без отримання свагером JWT токена, зробити виклик так просто з нього неможна
-// Усі ендпоїнти що захищені, мають маркуватися анотацією @SecurityRequirement(name="JWT")
-// параметр name співпадає з тим що ми вказали в схемі.
 @SecurityScheme(
         name = "JWT",
         type = SecuritySchemeType.HTTP,
