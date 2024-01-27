@@ -20,6 +20,7 @@ public class UrlWebService {
     public ModelAndView getEditModelAndViewWithErrors(BindingResult bindingResult,
                                                       UpdateUrlRequest updateUrlRequest,
                                                       Long id,
+                                                      Boolean fromAdminPage,
                                                       Principal principal) {
         List<String> errors = bindingResult.getAllErrors()
                 .stream()
@@ -31,10 +32,11 @@ public class UrlWebService {
         result.addObject("username", principal.getName());
         result.addObject("urls", updateUrlRequest);
         result.addObject("id", id);
+        result.addObject("fromAdminPage", fromAdminPage);
         return result;
     }
 
-    public ModelAndView updateUrl(Principal principal, Long id, UpdateUrlRequest updateUrlRequest) {
+    public ModelAndView updateUrl(Principal principal, Long id, UpdateUrlRequest updateUrlRequest, Boolean fromAdminPage) {
         try {
             urlService.update(principal.getName(), id, updateUrlRequest);
         } catch (Exception e) {
@@ -43,12 +45,21 @@ public class UrlWebService {
             result.addObject("username", principal.getName());
             result.addObject("urls", updateUrlRequest);
             result.addObject("id", id);
+            result.addObject("fromAdminPage", fromAdminPage);
             return result;
         }
+
         ModelAndView result = new ModelAndView("all-user");
-        result.addObject("username", principal.getName());
-        result.addObject("userUrls", urlService.getActiveUrlUser(principal.getName()));
-        result.addObject("userUrlsInactive", urlService.getInactiveUrlUser(principal.getName()));
+        if (fromAdminPage) {
+            result = new ModelAndView("admin-urls");
+            result.addObject("username", principal.getName());
+            result.addObject("userUrls", urlService.getActiveUrl());
+            result.addObject("userUrlsInactive", urlService.getInactiveUrl());
+        } else {
+            result.addObject("username", principal.getName());
+            result.addObject("userUrls", urlService.getActiveUrlUser(principal.getName()));
+            result.addObject("userUrlsInactive", urlService.getInactiveUrlUser(principal.getName()));
+        }
         return result;
     }
 

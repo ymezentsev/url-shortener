@@ -23,15 +23,20 @@
         .user {
             font-weight: bold;
         }
+
+
     </style>
     <title>Panda Edit ShortLink</title>
 </head>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
 <body>
-    <header class="header" style="position: fixed; top: 0; width: 100%; height: 56px;">
+<header class="header" style="position: fixed; top: 0; width: 100%; height: 56px;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-11 mt-2">
@@ -58,34 +63,44 @@
     <div class="container mt-4">
         <div class="col-md-12 mb-4" style="height: 40px;"></div>
 
-        <form method="post" action="/V2/urls/edit" class="container col-4 mt-4" style="height: 524px;">
-            <div class="form-group mb-4">
-                <h1>Edit your ShortLink</h1>
-            </div>
+        <div th:with="address=${fromAdminPage}=='true' ? '/V2/admin/urls/edit': '/V2/urls/edit'">
 
-            <div class="form-group mb-4">
-                <label for="url">URL</label>
-                <input type="text" name="url" class="form-control" id="url" th:value="${urls.url}" contenteditable="false" aria-describedby="urlHelp" placeholder="Edit URL here!">
-            </div>
+            <form method="post" th:action="${address}" class="container col-4 mt-4" style="height: 524px;">
 
-            <div class="form-group mb-4">
-                <label for="shortUrl">Short link</label>
-                <input type="text" name="shortUrl" class="form-control" id="shortUrl" th:value="${urls.shortUrl}" contenteditable="false" aria-describedby="shortlinkHelp" placeholder="Edit your ShortLink here!">
-            </div>
+                <div class="form-group mb-4">
+                    <h1>Edit your ShortLink</h1>
+                </div>
 
-            <div class="form-group mb-4">
-                <label for="description">Description</label>
-                <textarea name="description" class="form-control" id="description" th:text="${urls.description}" contenteditable="false" cols="30" rows="5" placeholder="Description is here!"></textarea>
-                <small id="descriptionForEditHelp" class="form-text text-muted">Descriptioin up to 1000 symbols.</small>
-            </div>
-            <input type="hidden" th:value="${id}" name = "id" />
+                <div class="form-group mb-4">
+                    <label for="url">URL</label>
+                    <input type="text" name="url" class="form-control" id="url" th:value="${urls.url}"
+                           contenteditable="false" aria-describedby="urlHelp" placeholder="Edit URL here!">
+                </div>
 
-            <button class="btn btn-success btn-lg mt-2" type="submit">Save</button>
+                <div class="form-group mb-4">
+                    <label for="shortUrl">Short link</label>
+                    <input type="text" name="shortUrl" class="form-control" id="shortUrl" th:value="${urls.shortUrl}"
+                           contenteditable="false" aria-describedby="shortlinkHelp"
+                           placeholder="Edit your ShortLink here!">
+                </div>
 
-            <div class="alert alert-danger" role="alert" th:if="${errors}" th:each="error: ${errors}">
-                <small th:text="${error}"></small>
-            </div>
-        </form>
+                <div class="form-group mb-4">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description" th:text="${urls.description}"
+                              contenteditable="false" cols="30" rows="5" placeholder="Description is here!"></textarea>
+                    <small id="descriptionForEditHelp" class="form-text text-muted">Descriptioin up to 1000
+                        symbols.</small>
+                </div>
+                <input type="hidden" th:value="${id}" name="id"/>
+                <input type="hidden" th:value="${fromAdminPage}" name="fromAdminPage"/>
+
+                <button class="btn btn-success btn-lg mt-2" type="submit">Save</button>
+
+                <div class="alert alert-danger" role="alert" th:if="${errors}" th:each="error: ${errors}">
+                    <small th:text="${error}"></small>
+                </div>
+            </form>
+        </div>
     </div>
 </main>
 

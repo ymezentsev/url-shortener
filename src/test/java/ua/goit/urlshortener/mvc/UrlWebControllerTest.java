@@ -290,7 +290,7 @@ class UrlWebControllerTest {
         UpdateUrlRequest request = new UpdateUrlRequest("edited12", "https://www.google.com/", "Edited");
         BindingResult bindingResult = new MapBindingResult(Collections.emptyMap(), "UpdateUrlRequest");
 
-        ModelAndView model = urlWebController.postEdit(request, bindingResult, 1L, authentication);
+        ModelAndView model = urlWebController.postEdit(request, bindingResult, 1L, false, authentication);
 
         assertEquals("all-user", model.getViewName());
         assertTrue(model.getModel().containsKey("username"));

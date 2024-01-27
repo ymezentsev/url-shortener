@@ -113,7 +113,7 @@ class UrlWebServiceTest {
 
         UpdateUrlRequest request = new UpdateUrlRequest("edited12", "https://www.google.com/", "Edited");
 
-        ModelAndView model = urlWebService.updateUrl(authentication, 1L, request);
+        ModelAndView model = urlWebService.updateUrl(authentication, 1L, request, false);
 
         assertEquals("all-user", model.getViewName());
         assertTrue(model.getModel().containsKey("username"));
@@ -143,7 +143,7 @@ class UrlWebServiceTest {
         UpdateUrlRequest request = new UpdateUrlRequest("invalid1", "https://www.invalid.com/", "Invalid");
         BindingResult bindingResult = new MapBindingResult(Collections.emptyMap(), "UpdateUrlRequest");
 
-        ModelAndView model = urlWebService.getEditModelAndViewWithErrors(bindingResult, request, 1L, authentication);
+        ModelAndView model = urlWebService.getEditModelAndViewWithErrors(bindingResult, request, 1L, false, authentication);
 
         assertEquals("edit", model.getViewName());
         assertTrue(model.getModel().containsKey("username"));

@@ -105,13 +105,14 @@ public class UrlWebController {
 
     @PostMapping(value = "/edit")
     public ModelAndView postEdit(@Valid @ModelAttribute UpdateUrlRequest updateUrlRequest,
-                             BindingResult bindingResult,
-                             @RequestParam("id") Long id,
-                             Principal principal) {
+                                 BindingResult bindingResult,
+                                 @RequestParam("id") Long id,
+                                 @RequestParam(value = "fromAdminPage", defaultValue = "false") Boolean fromAdminPage,
+                                 Principal principal) {
         if (bindingResult.hasErrors()) {
-             return urlWebService.getEditModelAndViewWithErrors(bindingResult, updateUrlRequest, id, principal);
+            return urlWebService.getEditModelAndViewWithErrors(bindingResult, updateUrlRequest, id, fromAdminPage, principal);
         }
-        return urlWebService.updateUrl(principal, id, updateUrlRequest);
+        return urlWebService.updateUrl(principal, id, updateUrlRequest, fromAdminPage);
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -135,8 +136,8 @@ public class UrlWebController {
 
     @PostMapping(value = "/create")
     public ModelAndView postCreate(@Valid @ModelAttribute CreateUrlRequest createUrlRequest,
-                             BindingResult bindingResult,
-                             Principal principal) {
+                                   BindingResult bindingResult,
+                                   Principal principal) {
         if (bindingResult.hasErrors()) {
             return urlWebService.getCreateModelAndViewWithErrors(bindingResult, principal);
         }

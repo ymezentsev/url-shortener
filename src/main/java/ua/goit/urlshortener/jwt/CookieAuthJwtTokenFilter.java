@@ -32,7 +32,7 @@ import java.util.Optional;
 public final class CookieAuthJwtTokenFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
-    private static final int COOKIE_LIFE_IN_SEC = 600;
+    private static final int COOKIE_LIFE_IN_SEC = 3600;
 
     @Lazy
     @Autowired
