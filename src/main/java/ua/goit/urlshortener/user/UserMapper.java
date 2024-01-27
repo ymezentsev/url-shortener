@@ -2,6 +2,9 @@ package ua.goit.urlshortener.user;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class UserMapper {
     public UserDto toUserDto(UserEntity entity){
@@ -20,5 +23,11 @@ public class UserMapper {
                 .password(dto.getPassword())
                 .role(dto.getRole())
                 .build();
+    }
+
+    public List<UserDto> toUserDtoList(List<UserEntity> userEntities){
+        return userEntities.stream()
+                .map(this::toUserDto)
+                .collect(Collectors.toList());
     }
 }

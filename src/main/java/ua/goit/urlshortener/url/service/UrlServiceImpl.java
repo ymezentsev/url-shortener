@@ -68,21 +68,16 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public void deleteById(String username, Long id) {
-        if (!urlRepository.existsById(id)) {
-            throw new IllegalArgumentException("Url with id " + id + " not found");
-        } else {
-            Optional<UrlEntity> optionalUrl = urlRepository.findById(id);
-            if (optionalUrl.isPresent()) {
-                UrlEntity urlToDelete = optionalUrl.get();
-                if (!urlToDelete.getUser().getUsername().equals(username)) {
-                    throw new AccessDeniedException("Access forbidden");
-                }
+        UrlEntity urlToDelete = urlRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Url with id " + id + " not found"));
 
-                UserEntity user = urlToDelete.getUser();
-                user.getUrls().remove(urlToDelete);
-            }
-            urlRepository.deleteById(id);
+        if(!urlToDelete.getUser().getUsername().equals(username)){
+            throw new AccessDeniedException("Access forbidden");
         }
+
+        UserEntity user = urlToDelete.getUser();
+        user.getUrls().remove(urlToDelete);
+        urlRepository.deleteById(id);
     }
 
     @Override
