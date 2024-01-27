@@ -72,6 +72,8 @@ public class JwtSecurityConfiguration {
                                 "/V2/urls/prolongation/**",
                                 "/V2/urls/create/**"
                         ).authenticated()
+                        .requestMatchers("V2/admin/urls/**",
+                                "V2/admin/users/**").hasAuthority("ADMIN")
                         .anyRequest().permitAll())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authJwtTokenFilter, UsernamePasswordAuthenticationFilter.class)

@@ -33,15 +33,34 @@
 
 <body>
 <header class="header" style="position: fixed; top: 0; width: 100%; height: 56px;">
-    <div class="container-fluid">
-        <a href="/V2/urls">
-            <img
-                    src="/images/panda-logo.webp"
-                    alt="Panda_Logo"
-                    width="100"
-                    height="70"
-            />
-        </a>
+    <div class="container-fluid" sec:authorize="isAnonymous()">
+        <div class="row">
+            <div class="col-md-11 mt-2">
+                <a href="/V2/urls">
+                    <img
+                            src="/images/panda-logo.webp"
+                            alt="Panda_Logo"
+                            width="100"
+                            height="70"
+                    />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" sec:authorize="isAuthenticated()">
+        <div class="row">
+            <div class="col-md-11 mt-2">
+                <a href="/V2/urls/user">
+                    <img
+                            src="/images/panda-logo.webp"
+                            alt="Panda_Logo"
+                            width="100"
+                            height="70"
+                    />
+                </a>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -50,7 +69,7 @@
         <div class="col-md-12 mb-4" style="height: 240px;"></div>
 
         <div class="form-group mb-4" align="center">
-            <h1>Something <br>was <br>wrong!</h1>
+            <h1>Access <br>forbidden!</h1>
         </div>
 
     </div>
