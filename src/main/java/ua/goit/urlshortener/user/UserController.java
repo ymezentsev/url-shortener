@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.goit.urlshortener.user.service.UserService;
 
 @RestController
-@RequestMapping("V1/user")
+@RequestMapping("V1/users")
 @RequiredArgsConstructor
 @Tag(name= "User", description = "User API")
 public class UserController {

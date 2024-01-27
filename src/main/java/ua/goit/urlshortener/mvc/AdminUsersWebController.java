@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ua.goit.urlshortener.user.service.UserService;
+import ua.goit.urlshortener.admin.service.AdminService;
 
 import java.security.Principal;
 
@@ -14,13 +14,13 @@ import java.security.Principal;
 @RequestMapping("V2/admin/users")
 @RequiredArgsConstructor
 public class AdminUsersWebController {
-    private final UserService userService;
+    private final AdminService adminService;
     private final AdminUserWebService adminUserWebService;
     @GetMapping()
     public ModelAndView getAllUsers(Principal principal) {
         ModelAndView result = new ModelAndView("admin-users");
         result.addObject("username", principal.getName());
-        result.addObject("users", userService.listAll());
+        result.addObject("users", adminService.listAll());
         return result;
     }
 
