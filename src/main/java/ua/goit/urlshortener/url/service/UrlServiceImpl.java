@@ -5,14 +5,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import ua.goit.urlshortener.url.UrlEntity;
 import ua.goit.urlshortener.url.UrlDto;
+import ua.goit.urlshortener.url.UrlEntity;
 import ua.goit.urlshortener.url.UrlMapper;
 import ua.goit.urlshortener.url.UrlRepository;
-import ua.goit.urlshortener.url.request.CreateUrlRequest;
-import ua.goit.urlshortener.url.request.UpdateUrlRequest;
 import ua.goit.urlshortener.url.exceptions.AlreadyExistUrlException;
 import ua.goit.urlshortener.url.exceptions.NotAccessibleException;
+import ua.goit.urlshortener.url.request.CreateUrlRequest;
+import ua.goit.urlshortener.url.request.UpdateUrlRequest;
 import ua.goit.urlshortener.user.UserEntity;
 import ua.goit.urlshortener.user.service.UserService;
 
@@ -23,7 +23,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ua.goit.urlshortener.url.UrlEntity.VALID_DAYS;
@@ -71,7 +70,7 @@ public class UrlServiceImpl implements UrlService {
         UrlEntity urlToDelete = urlRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Url with id " + id + " not found"));
 
-        if(!urlToDelete.getUser().getUsername().equals(username)){
+        if (!urlToDelete.getUser().getUsername().equals(username)) {
             throw new AccessDeniedException("Access forbidden");
         }
 
@@ -154,24 +153,19 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public void prolongation(String username, Long id) {
-        if (!urlRepository.existsById(id)) {
-            throw new IllegalArgumentException("Url with id " + id + " not found");
-        } else {
-            Optional<UrlEntity> optionalUrl = urlRepository.findById(id);
-            if (optionalUrl.isPresent()) {
-                UrlEntity urlToProlong = optionalUrl.get();
-                if (!urlToProlong.getUser().getUsername().equals(username)) {
-                    throw new AccessDeniedException("Access forbidden");
-                }
+        UrlEntity urlToProlong = urlRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Url with id " + id + " not found"));
 
-                LocalDate newExpirationDate = urlToProlong.getExpirationDate().plusDays(VALID_DAYS);
-                if(newExpirationDate.isBefore(LocalDate.now())){
-                    newExpirationDate = LocalDate.now().plusDays(VALID_DAYS);
-                }
-                urlToProlong.setExpirationDate(newExpirationDate);
-                urlRepository.save(urlToProlong);
-            }
+        if (!urlToProlong.getUser().getUsername().equals(username)) {
+            throw new AccessDeniedException("Access forbidden");
         }
+
+        LocalDate newExpirationDate = urlToProlong.getExpirationDate().plusDays(VALID_DAYS);
+        if (newExpirationDate.isBefore(LocalDate.now())) {
+            newExpirationDate = LocalDate.now().plusDays(VALID_DAYS);
+        }
+        urlToProlong.setExpirationDate(newExpirationDate);
+        urlRepository.save(urlToProlong);
     }
 
     @Override
@@ -179,7 +173,7 @@ public class UrlServiceImpl implements UrlService {
         UrlEntity urlEntity = urlRepository.findByShortUrl(shotUrl)
                 .orElseThrow(() -> new IllegalArgumentException("Url with short url = " + shotUrl + " not found"));
 
-        if(urlEntity.getExpirationDate().isBefore(LocalDate.now())){
+        if (urlEntity.getExpirationDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Link is inactive");
         }
 
