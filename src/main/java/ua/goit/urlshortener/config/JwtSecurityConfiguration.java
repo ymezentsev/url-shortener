@@ -73,6 +73,7 @@ public class JwtSecurityConfiguration {
                                 "/V2/urls/create/**"
                         ).authenticated()
                         .requestMatchers("V1/admin/users/**",
+                                "V1/admin/urls/**",
                                 "V2/admin/urls/**",
                                 "V2/admin/users/**").hasAuthority("ADMIN")
                         .anyRequest().permitAll())

@@ -155,7 +155,8 @@
                                     <li><a class="dropdown-item" href="/V2/admin/urls">All</a></li>
                                     <th:block th:each="userList: ${usersList}">
                                         <li>
-                                            <a class="dropdown-item" href="/V2/admin/urls">
+                                            <a class="dropdown-item" href="#"
+                                               th:href="@{/V2/admin/urls/{userId}(userId=${userList.id})}">
                                                 <div th:text="${userList.username}"></div>
                                             </a>
                                         </li>

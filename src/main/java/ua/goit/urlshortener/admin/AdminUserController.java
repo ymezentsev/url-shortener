@@ -13,8 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("V1/admin/users")
 @RequiredArgsConstructor
-@Tag(name= "Admin", description = "Admin API")
-public class AdminController {
+@Tag(name= "Admin users", description = "Admin API for users")
+public class AdminUserController {
     private final AdminService adminService;
 
     @GetMapping("/list")
@@ -28,13 +28,13 @@ public class AdminController {
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Change user's role")
     public void changeUserRole(@PathVariable("id") Long id, Authentication authentication) {
-        adminService.changeRole(id, authentication);
+        adminService.changeUserRole(id, authentication);
     }
 
     @DeleteMapping("/delete/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Delete user")
     public void deleteUser(@PathVariable("id") Long id, Authentication authentication) {
-        adminService.deleteById(id, authentication);
+        adminService.deleteUserById(id, authentication);
     }
 }

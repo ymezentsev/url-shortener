@@ -81,4 +81,14 @@ public class AdminUrlsWebController {
         }
         return urlWebService.updateUrl(id, updateUrlRequest, fromAdminPage, authentication);
     }
+
+    @GetMapping("/{userId}")
+    public ModelAndView allUserUrls(@PathVariable("userId") Long userId, Authentication authentication) {
+        ModelAndView result = new ModelAndView("admin-urls");
+        result.addObject("username", authentication.getName());
+        result.addObject("usersList", adminService.getAllUsers());
+        result.addObject("userUrls", adminService.getActiveUrlsForSelectedUser(userId));
+        result.addObject("userUrlsInactive", adminService.getInactiveUrlsForSelectedUser(userId));
+        return result;
+    }
 }

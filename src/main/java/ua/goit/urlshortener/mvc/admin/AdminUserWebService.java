@@ -16,7 +16,7 @@ public class AdminUserWebService {
         result.addObject("username", authentication.getName());
 
         try {
-            adminService.deleteById(id, authentication);
+            adminService.deleteUserById(id, authentication);
         } catch (Exception e) {
             result.addObject("errors", e.getMessage());
         }
@@ -29,7 +29,7 @@ public class AdminUserWebService {
         result.addObject("username", authentication.getName());
 
         try {
-            adminService.changeRole(id, authentication);
+            adminService.changeUserRole(id, authentication);
         } catch (Exception e) {
             result.addObject("errors", e.getMessage());
         }

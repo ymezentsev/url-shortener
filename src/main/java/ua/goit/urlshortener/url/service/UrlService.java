@@ -115,11 +115,7 @@ public class UrlService {
 
     public List<UrlDto> getAllUrlUser(Authentication authentication) {
         Long userId = userService.findByUsername(authentication.getName()).getId();
-
-        return urlRepository.findByUserId(userId)
-                .stream()
-                .map(urlMapper::toUrlDto)
-                .collect(Collectors.toList());
+        return urlMapper.toUrlDtoList(urlRepository.findByUserId(userId));
     }
 
     public List<UrlDto> getActiveUrlUser(Authentication authentication) {
