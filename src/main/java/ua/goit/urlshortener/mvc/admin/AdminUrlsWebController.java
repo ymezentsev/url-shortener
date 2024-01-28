@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.goit.urlshortener.admin.AdminService;
 import ua.goit.urlshortener.mvc.url.UrlWebService;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
 import ua.goit.urlshortener.url.service.UrlService;
@@ -17,11 +18,13 @@ import ua.goit.urlshortener.url.service.UrlService;
 public class AdminUrlsWebController {
     private final UrlService urlService;
     private final UrlWebService urlWebService;
+    private final AdminService adminService;
 
     @GetMapping()
     public ModelAndView getAllLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView("admin-urls");
         result.addObject("username", authentication.getName());
+        result.addObject("usersList", adminService.getAllUsers());
         result.addObject("userUrls", urlService.getActiveUrl());
         result.addObject("userUrlsInactive", urlService.getInactiveUrl());
         return result;
@@ -31,6 +34,7 @@ public class AdminUrlsWebController {
     public ModelAndView getAllUsersActiveLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView("admin-urls");
         result.addObject("username", authentication.getName());
+        result.addObject("usersList", adminService.getAllUsers());
         result.addObject("userUrls", urlService.getActiveUrl());
         return result;
     }
@@ -39,6 +43,7 @@ public class AdminUrlsWebController {
     public ModelAndView getAllUsersInactiveLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView("admin-urls");
         result.addObject("username", authentication.getName());
+        result.addObject("usersList", adminService.getAllUsers());
         result.addObject("userUrlsInactive", urlService.getInactiveUrl());
         return result;
     }
