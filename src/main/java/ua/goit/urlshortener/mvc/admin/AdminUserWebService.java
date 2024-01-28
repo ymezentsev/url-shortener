@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.mvc;
+package ua.goit.urlshortener.mvc.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

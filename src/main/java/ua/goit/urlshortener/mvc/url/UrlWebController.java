@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.mvc;
+package ua.goit.urlshortener.mvc.url;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

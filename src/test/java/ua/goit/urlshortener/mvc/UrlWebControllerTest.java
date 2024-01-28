@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import ua.goit.urlshortener.mvc.url.UrlWebController;
 import ua.goit.urlshortener.url.UrlDto;
 import ua.goit.urlshortener.url.request.CreateUrlRequest;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;

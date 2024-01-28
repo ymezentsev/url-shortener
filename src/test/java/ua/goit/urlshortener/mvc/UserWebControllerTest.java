@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import ua.goit.urlshortener.mvc.user.UserWebController;
+import ua.goit.urlshortener.mvc.user.UserWebService;
 import ua.goit.urlshortener.user.CreateUserRequest;
 
 import java.util.Collections;

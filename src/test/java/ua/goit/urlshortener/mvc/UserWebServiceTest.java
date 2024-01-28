@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.ModelAndView;
+import ua.goit.urlshortener.mvc.user.UserWebService;
 import ua.goit.urlshortener.user.CreateUserRequest;
 
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.mvc;
+package ua.goit.urlshortener.mvc.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;

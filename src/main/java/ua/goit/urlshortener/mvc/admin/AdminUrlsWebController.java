@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.mvc;
+package ua.goit.urlshortener.mvc.admin;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.goit.urlshortener.mvc.url.UrlWebService;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
 import ua.goit.urlshortener.url.service.UrlService;
 
