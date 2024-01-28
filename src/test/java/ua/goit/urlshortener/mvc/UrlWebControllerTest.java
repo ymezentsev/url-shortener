@@ -22,7 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.goit.urlshortener.url.UrlDto;
 import ua.goit.urlshortener.url.request.CreateUrlRequest;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
-import ua.goit.urlshortener.url.service.UrlServiceImpl;
+import ua.goit.urlshortener.url.service.UrlService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -41,7 +41,7 @@ class UrlWebControllerTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
     @Autowired
-    UrlServiceImpl urlService;
+    UrlService urlService;
     @Autowired
     UrlWebController urlWebController;
 
@@ -80,7 +80,7 @@ class UrlWebControllerTest {
 
         assertEquals("all-guest", result.getViewName());
         assertTrue(result.getModel().containsKey("userUrls"));
-        assertEquals(4, urlService.listAll().size());
+        assertEquals(4, urlService.getAll().size());
     }
 
     @Test
@@ -337,6 +337,6 @@ class UrlWebControllerTest {
         SecurityContextHolder.setContext(context);
 
         urlWebController.delete(2L, authentication);
-        assertEquals(4, urlService.listAll().size());
+        assertEquals(4, urlService.getAll().size());
     }
 }

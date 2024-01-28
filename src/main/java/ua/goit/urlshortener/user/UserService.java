@@ -1,4 +1,4 @@
-package ua.goit.urlshortener.user.service;
+package ua.goit.urlshortener.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,32 +8,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.goit.urlshortener.jwt.JwtUtils;
-import ua.goit.urlshortener.user.*;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-
+public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
 
-    @Override
     public UserDto findByUsername(String username) {
-        Optional<UserEntity> userEntity = userRepository.findByUsername(username);
-        if (userEntity.isPresent()) {
-            return userMapper.toUserDto(userEntity.get());
-        } else {
-            throw new NoSuchElementException("There isn't user with username: " + username);
-        }
+        UserEntity userEntity = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NoSuchElementException("There isn't user with username: " + username));
+        return userMapper.toUserDto(userEntity);
     }
 
-    @Override
     public void registerUser(CreateUserRequest userRequest) {
         String username = userRequest.getUsername();
         String password = userRequest.getPassword();
@@ -50,7 +42,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    @Override
     public String loginUser(CreateUserRequest userRequest) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(

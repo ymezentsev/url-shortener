@@ -12,10 +12,10 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.goit.urlshortener.url.request.CreateUrlRequest;
-import ua.goit.urlshortener.url.service.UrlServiceImpl;
+import ua.goit.urlshortener.url.service.UrlService;
 import ua.goit.urlshortener.url.exceptions.NotAccessibleException;
 import ua.goit.urlshortener.user.UserDto;
-import ua.goit.urlshortener.user.service.UserServiceImpl;
+import ua.goit.urlshortener.user.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,10 +31,10 @@ class UrlControllerTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
     @Autowired
-    UrlServiceImpl urlService;
+    UrlService urlService;
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @BeforeEach
     void setUp(){
@@ -45,7 +45,7 @@ class UrlControllerTest {
     @Test
     @DisplayName("Get all urls")
     void testGetAllUrls(){
-        assertEquals(4, urlService.listAll().size());
+        assertEquals(4, urlService.getAll().size());
     }
 
     @Test
@@ -77,7 +77,7 @@ class UrlControllerTest {
     @DisplayName("Delete url")
     void testDeleteById() {
         urlService.deleteById("testadmin", 1L);
-        assertNotEquals(4, urlService.listAll().size());
+        assertNotEquals(4, urlService.getAll().size());
     }
 
     @Test

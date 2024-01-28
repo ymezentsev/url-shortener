@@ -4,11 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import ua.goit.urlshortener.admin.service.AdminService;
 import ua.goit.urlshortener.user.UserDto;
 
 import java.util.List;
@@ -23,27 +20,21 @@ public class AdminController {
     @GetMapping("/list")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all users")
-    public List<UserDto> usersList() {
-        return adminService.listAll();
+    public List<UserDto> getAllUsers() {
+        return adminService.getAllUsers();
     }
 
     @PostMapping("/edit/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Change user's role")
-    public void changeUserRole(@PathVariable("id") Long id) {
-        adminService.changeRole(getUsername(), id);
+    public void changeUserRole(@PathVariable("id") Long id, Authentication authentication) {
+        adminService.changeRole(id, authentication);
     }
 
     @DeleteMapping("/delete/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Delete user")
-    public void deleteUser(@PathVariable("id") Long id) {
-        adminService.deleteById(getUsername(), id);
-    }
-
-    private String getUsername() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        UserDetails principal = (UserDetails) context.getAuthentication().getPrincipal();
-        return principal.getUsername();
+    public void deleteUser(@PathVariable("id") Long id, Authentication authentication) {
+        adminService.deleteById(id, authentication);
     }
 }

@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Schema(description = "Credentials")
 public class CreateUserRequest {
     @NotBlank(message = "Username is required")

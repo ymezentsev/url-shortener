@@ -3,6 +3,7 @@ package ua.goit.urlshortener.url;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.goit.urlshortener.user.UserEntity;
@@ -10,6 +11,7 @@ import ua.goit.urlshortener.user.UserEntity;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @Entity
 @Table(name = "urls")
 @NoArgsConstructor

@@ -12,7 +12,7 @@ import ua.goit.urlshortener.url.UrlMapper;
 import ua.goit.urlshortener.url.UrlRepository;
 import ua.goit.urlshortener.user.Role;
 import ua.goit.urlshortener.user.UserDto;
-import ua.goit.urlshortener.user.service.UserService;
+import ua.goit.urlshortener.user.UserService;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UrlServiceImplTest {
+class UrlServiceTest {
 
     @Mock
     private UrlRepository urlRepository;
@@ -34,7 +34,7 @@ class UrlServiceImplTest {
     private UserService userService;
 
     @InjectMocks
-    private UrlServiceImpl urlService;
+    private UrlService urlService;
 
 
 

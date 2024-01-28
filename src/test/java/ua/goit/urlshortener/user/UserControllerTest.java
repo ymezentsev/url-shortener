@@ -12,7 +12,6 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import ua.goit.urlshortener.user.service.UserServiceImpl;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -31,7 +30,7 @@ class UserControllerTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @BeforeEach
     void setUp() {

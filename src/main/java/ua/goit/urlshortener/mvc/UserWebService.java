@@ -2,15 +2,14 @@ package ua.goit.urlshortener.mvc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import ua.goit.urlshortener.url.service.UrlService;
 import ua.goit.urlshortener.user.CreateUserRequest;
-import ua.goit.urlshortener.user.service.UserService;
+import ua.goit.urlshortener.user.UserService;
 
 import java.util.List;
 
@@ -39,10 +38,12 @@ public class UserWebService {
             result.addObject("errors", "Wrong username or password");
             return result;
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         ModelAndView result = new ModelAndView("all-user");
-        result.addObject("username", getUsername());
-        result.addObject("userUrls", urlService.getActiveUrlUser(getUsername()));
-        result.addObject("userUrlsInactive", urlService.getInactiveUrlUser(getUsername()));
+        result.addObject("username", authentication.getName());
+        result.addObject("userUrls", urlService.getActiveUrlUser(authentication));
+        result.addObject("userUrlsInactive", urlService.getInactiveUrlUser(authentication));
         return result;
     }
 
@@ -53,11 +54,5 @@ public class UserWebService {
                 .toList();
         result.addObject("errors", errors);
         return result;
-    }
-
-    private String getUsername() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        UserDetails principal = (UserDetails) context.getAuthentication().getPrincipal();
-        return principal.getUsername();
     }
 }

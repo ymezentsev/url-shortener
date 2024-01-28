@@ -1,7 +1,8 @@
-package ua.goit.urlshortener.admin.service;
+package ua.goit.urlshortener.admin;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ua.goit.urlshortener.user.*;
 
@@ -9,34 +10,31 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AdminServiceImpl implements AdminService {
+public class AdminService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    @Override
-    public List<UserDto> listAll() {
+    public List<UserDto> getAllUsers() {
         return userMapper.toUserDtoList(userRepository.findAll());
     }
 
-    @Override
     @Transactional
-    public void deleteById(String username, Long id) {
+    public void deleteById(Long id, Authentication authentication) {
         UserEntity userToDelete = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with id " + id + " not found"));
 
-        if (userToDelete.getUsername().equals(username)) {
+        if (userToDelete.getUsername().equals(authentication.getName())) {
             throw new IllegalArgumentException("You can't delete yourself");
         }
         userRepository.deleteById(id);
     }
 
-    @Override
     @Transactional
-    public void changeRole(String username, Long id) {
+    public void changeRole(Long id, Authentication authentication) {
         UserEntity userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with id " + id + " not found"));
 
-        if (userToUpdate.getUsername().equals(username)) {
+        if (userToUpdate.getUsername().equals(authentication.getName())) {
             throw new IllegalArgumentException("You can't change role for yourself");
         }
 

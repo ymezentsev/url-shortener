@@ -5,9 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ua.goit.urlshortener.url.request.CreateUrlRequest;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
@@ -25,58 +23,59 @@ public class UrlController {
 
     @GetMapping("/list")
     @Operation(summary = "Get all urls")
-    public List<UrlDto> urlList() {
-        return urlService.listAll();
+    public List<UrlDto> getAllUrl() {
+        return urlService.getAll();
     }
 
     @PostMapping("/create")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Create short url")
-    public UrlDto createLink(@RequestBody CreateUrlRequest request) {
-        return urlService.createUrl(getUsername(), request);
+    public UrlDto createUrl(@RequestBody CreateUrlRequest request, Authentication authentication) {
+        return urlService.createUrl(request, authentication);
     }
 
     @GetMapping("/list/user")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all urls for current user")
-    public List<UrlDto> allUserUrls() {
-        return urlService.getAllUrlUser(getUsername());
+    public List<UrlDto> allUserUrls(Authentication authentication) {
+        return urlService.getAllUrlUser(authentication);
     }
 
     @PostMapping("/edit/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Url edit")
     public void updateUrl(@PathVariable("id") Long id,
-                          @RequestBody UpdateUrlRequest request) {
-        urlService.update(getUsername(), id, request);
+                          @RequestBody UpdateUrlRequest request,
+                          Authentication authentication) {
+        urlService.updateUrl(id, request, authentication);
     }
 
     @DeleteMapping("/delete/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Delete url")
-    public void deleteById(@PathVariable("id") Long id) {
-        urlService.deleteById(getUsername(), id);
+    public void deleteById(@PathVariable("id") Long id, Authentication authentication) {
+        urlService.deleteById(id, authentication);
     }
 
     @PostMapping("/prolongation/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Prolongation url's expiration date")
-    public void prolongationById(@PathVariable("id") Long id) {
-        urlService.prolongation(getUsername(), id);
+    public void prolongationById(@PathVariable("id") Long id, Authentication authentication) {
+        urlService.prolongation(id, authentication);
     }
 
     @GetMapping("/list/user/active")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all active urls for current user")
-    public List<UrlDto> ActiveUsersUrls() {
-        return urlService.getActiveUrlUser(getUsername());
+    public List<UrlDto> ActiveUsersUrls(Authentication authentication) {
+        return urlService.getActiveUrlUser(authentication);
     }
 
     @GetMapping("/list/user/inactive")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all inactive urls for current user")
-    public List<UrlDto> InactiveUsersUrls() {
-        return urlService.getInactiveUrlUser(getUsername());
+    public List<UrlDto> InactiveUsersUrls(Authentication authentication) {
+        return urlService.getInactiveUrlUser(authentication);
     }
 
     @GetMapping("/list/active")
@@ -95,11 +94,5 @@ public class UrlController {
     @Operation(summary = "Redirect by short url")
     public void redirectToUrl(@PathVariable("shortUrl") String shortUrl, HttpServletResponse response) throws IOException {
         urlService.redirectToUrl(shortUrl, response);
-    }
-
-    private String getUsername() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        UserDetails principal = (UserDetails) context.getAuthentication().getPrincipal();
-        return principal.getUsername();
     }
 }

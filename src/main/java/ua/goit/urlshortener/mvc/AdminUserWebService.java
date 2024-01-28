@@ -1,40 +1,39 @@
 package ua.goit.urlshortener.mvc;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
-import ua.goit.urlshortener.admin.service.AdminService;
-
-import java.security.Principal;
+import ua.goit.urlshortener.admin.AdminService;
 
 @Service
 @RequiredArgsConstructor
 public class AdminUserWebService {
     private final AdminService adminService;
 
-    public ModelAndView delete(Principal principal, Long id) {
+    public ModelAndView delete(Long id, Authentication authentication) {
         ModelAndView result = new ModelAndView("admin-users");
-        result.addObject("username", principal.getName());
+        result.addObject("username", authentication.getName());
 
         try {
-            adminService.deleteById(principal.getName(), id);
+            adminService.deleteById(id, authentication);
         } catch (Exception e) {
             result.addObject("errors", e.getMessage());
         }
-        result.addObject("users", adminService.listAll());
+        result.addObject("users", adminService.getAllUsers());
         return result;
     }
 
-    public ModelAndView changeRole(Principal principal, Long id) {
+    public ModelAndView changeRole(Long id, Authentication authentication) {
         ModelAndView result = new ModelAndView("admin-users");
-        result.addObject("username", principal.getName());
+        result.addObject("username", authentication.getName());
 
         try {
-            adminService.changeRole(principal.getName(), id);
+            adminService.changeRole(id, authentication);
         } catch (Exception e) {
             result.addObject("errors", e.getMessage());
         }
-        result.addObject("users", adminService.listAll());
+        result.addObject("users", adminService.getAllUsers());
         return result;
     }
 }

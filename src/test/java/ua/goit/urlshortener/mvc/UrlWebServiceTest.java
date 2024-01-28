@@ -22,7 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.goit.urlshortener.url.UrlDto;
 import ua.goit.urlshortener.url.request.CreateUrlRequest;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
-import ua.goit.urlshortener.url.service.UrlServiceImpl;
+import ua.goit.urlshortener.url.service.UrlService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -42,7 +42,7 @@ class UrlWebServiceTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
     @Autowired
-    UrlServiceImpl urlService;
+    UrlService urlService;
     @Autowired
     UrlWebService urlWebService;
 

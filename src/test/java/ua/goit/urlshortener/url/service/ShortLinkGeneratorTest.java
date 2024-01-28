@@ -44,9 +44,9 @@ public class ShortLinkGeneratorTest {
 
     @Test
     public void testGenerateShortLink() {
-        UrlServiceImpl urlService = Mockito.mock(UrlServiceImpl.class);
+        UrlService urlService = Mockito.mock(UrlService.class);
 
-        Mockito.when(urlService.listAll()).thenReturn(mockUrls);
+        Mockito.when(urlService.getAll()).thenReturn(mockUrls);
 
         ShortLinkGenerator shortLinkGenerator = new ShortLinkGenerator();
 
@@ -56,6 +56,6 @@ public class ShortLinkGeneratorTest {
         assertTrue(generatedLink.startsWith(""));
 
 
-        assertFalse(urlService.listAll().stream().anyMatch(urlEntity -> urlEntity.getShortUrl().equals(generatedLink)));
+        assertFalse(urlService.getAll().stream().anyMatch(urlEntity -> urlEntity.getShortUrl().equals(generatedLink)));
     }
 }

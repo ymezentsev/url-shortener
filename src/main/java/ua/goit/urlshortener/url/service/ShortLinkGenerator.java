@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.util.Random;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class ShortLinkGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int LINK_LENGTH = 8;
