@@ -31,14 +31,14 @@ public class AdminUrlController {
     @GetMapping("/{userId}/active")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all active urls for selected user")
-    public List<UrlDto> ActiveUsersUrls(@PathVariable("userId") Long userId, Authentication authentication) {
+    public List<UrlDto> getActiveUsersUrls(@PathVariable("userId") Long userId, Authentication authentication) {
         return adminService.getActiveUrlsForSelectedUser(userId);
     }
 
     @GetMapping("/{userId}/inactive")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all inactive urls for selected user")
-    public List<UrlDto> InactiveUsersUrls(@PathVariable("userId") Long userId, Authentication authentication) {
+    public List<UrlDto> getInactiveUsersUrls(@PathVariable("userId") Long userId, Authentication authentication) {
         return adminService.getInactiveUrlsForSelectedUser(userId);
     }
 }

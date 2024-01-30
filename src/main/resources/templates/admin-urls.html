@@ -153,11 +153,11 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="/V2/admin/urls">All</a></li>
-                                    <th:block th:each="userList: ${usersList}">
+                                    <th:block th:each="user: ${users}">
                                         <li>
                                             <a class="dropdown-item" href="#"
-                                               th:href="@{/V2/admin/urls/{userId}(userId=${userList.id})}">
-                                                <div th:text="${userList.username}"></div>
+                                               th:href="@{/V2/admin/urls/{userId}(userId=${user.id})}">
+                                                <div th:text="${user.username}"></div>
                                             </a>
                                         </li>
                                     </th:block>

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.goit.urlshortener.user.CreateUserRequest;
 
+import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
+
 @Controller
 @RequestMapping("V2/user")
 @RequiredArgsConstructor
@@ -16,14 +18,14 @@ public class UserWebController {
 
     @GetMapping("/register")
     public String getRegisterUser() {
-        return "register";
+        return MODEL_REGISTER;
     }
 
     @PostMapping("/register")
     public ModelAndView postRegisterUser(@Valid @ModelAttribute CreateUserRequest userRequest,
                                          BindingResult bindingResult,
                                          @RequestParam(name = "register", required = false) Boolean register) {
-        ModelAndView result = new ModelAndView("register");
+        ModelAndView result = new ModelAndView(MODEL_REGISTER);
         if (bindingResult.hasErrors()) {
             return userWebService.getModelAndViewWithErrors(bindingResult, result);
         }
@@ -32,13 +34,13 @@ public class UserWebController {
 
     @GetMapping("/login")
     public String getLoginUser() {
-        return "login";
+        return MODEL_LOGIN;
     }
 
     @PostMapping("/login")
     public ModelAndView postLoginUser(@Valid @ModelAttribute CreateUserRequest userRequest,
                                       BindingResult bindingResult) {
-        ModelAndView result = new ModelAndView("login");
+        ModelAndView result = new ModelAndView(MODEL_LOGIN);
         if (bindingResult.hasErrors()) {
             return userWebService.getModelAndViewWithErrors(bindingResult, result);
         }

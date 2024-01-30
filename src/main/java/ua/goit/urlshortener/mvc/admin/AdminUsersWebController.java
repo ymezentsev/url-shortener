@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ua.goit.urlshortener.admin.AdminService;
 
+import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
+
 @Controller
 @RequestMapping("V2/admin/users")
 @RequiredArgsConstructor
@@ -18,9 +20,9 @@ public class AdminUsersWebController {
 
     @GetMapping()
     public ModelAndView getAllUsers(Authentication authentication) {
-        ModelAndView result = new ModelAndView("admin-users");
-        result.addObject("username", authentication.getName());
-        result.addObject("users", adminService.getAllUsers());
+        ModelAndView result = new ModelAndView(MODEL_ADMIN_USERS);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
         return result;
     }
 

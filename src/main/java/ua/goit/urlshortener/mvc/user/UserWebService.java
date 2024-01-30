@@ -13,6 +13,8 @@ import ua.goit.urlshortener.user.UserService;
 
 import java.util.List;
 
+import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
+
 @Service
 @RequiredArgsConstructor
 public class UserWebService {
@@ -23,27 +25,27 @@ public class UserWebService {
         try {
             userService.registerUser(userRequest);
         } catch (Exception e) {
-            ModelAndView result = new ModelAndView("register");
-            result.addObject("errors", e.getMessage());
+            ModelAndView result = new ModelAndView(MODEL_REGISTER);
+            result.addObject(ATTRIBUTE_ERRORS, e.getMessage());
             return result;
         }
-        return new ModelAndView("success");
+        return new ModelAndView(MODEL_SUCCESS);
     }
 
     public ModelAndView loginUser(CreateUserRequest userRequest) {
         try {
             userService.loginUser(userRequest);
         } catch (Exception e) {
-            ModelAndView result = new ModelAndView("login");
-            result.addObject("errors", "Wrong username or password");
+            ModelAndView result = new ModelAndView(MODEL_LOGIN);
+            result.addObject(ATTRIBUTE_ERRORS, "Wrong username or password");
             return result;
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        ModelAndView result = new ModelAndView("all-user");
-        result.addObject("username", authentication.getName());
-        result.addObject("userUrls", urlService.getActiveUrlUser(authentication));
-        result.addObject("userUrlsInactive", urlService.getInactiveUrlUser(authentication));
+        ModelAndView result = new ModelAndView(MODEL_ALL_USER);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrlUser(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrlUser(authentication));
         return result;
     }
 
@@ -52,7 +54,7 @@ public class UserWebService {
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .toList();
-        result.addObject("errors", errors);
+        result.addObject(ATTRIBUTE_ERRORS, errors);
         return result;
     }
 }

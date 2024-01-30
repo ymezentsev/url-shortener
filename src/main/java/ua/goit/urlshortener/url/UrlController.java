@@ -67,26 +67,26 @@ public class UrlController {
     @GetMapping("/list/user/active")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all active urls for current user")
-    public List<UrlDto> ActiveUsersUrls(Authentication authentication) {
+    public List<UrlDto> getActiveUsersUrls(Authentication authentication) {
         return urlService.getActiveUrlUser(authentication);
     }
 
     @GetMapping("/list/user/inactive")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all inactive urls for current user")
-    public List<UrlDto> InactiveUsersUrls(Authentication authentication) {
+    public List<UrlDto> getInactiveUsersUrls(Authentication authentication) {
         return urlService.getInactiveUrlUser(authentication);
     }
 
     @GetMapping("/list/active")
     @Operation(summary = "Get all active urls")
-    public List<UrlDto> ActiveUrls() {
+    public List<UrlDto> getActiveUrls() {
         return urlService.getActiveUrl();
     }
 
     @GetMapping("/list/inactive")
     @Operation(summary = "Get all inactive urls")
-    public List<UrlDto> InactiveUrls() {
+    public List<UrlDto> getInactiveUrls() {
         return urlService.getInactiveUrl();
     }
 

@@ -12,6 +12,8 @@ import ua.goit.urlshortener.mvc.url.UrlWebService;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
 import ua.goit.urlshortener.url.service.UrlService;
 
+import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
+
 @Controller
 @RequestMapping("V2/admin/urls")
 @RequiredArgsConstructor
@@ -22,29 +24,29 @@ public class AdminUrlsWebController {
 
     @GetMapping()
     public ModelAndView getAllLinks(Authentication authentication) {
-        ModelAndView result = new ModelAndView("admin-urls");
-        result.addObject("username", authentication.getName());
-        result.addObject("usersList", adminService.getAllUsers());
-        result.addObject("userUrls", urlService.getActiveUrl());
-        result.addObject("userUrlsInactive", urlService.getInactiveUrl());
+        ModelAndView result = new ModelAndView(MODEL_ADMIN_URLS);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrl());
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrl());
         return result;
     }
 
     @GetMapping("/active")
     public ModelAndView getAllUsersActiveLinks(Authentication authentication) {
-        ModelAndView result = new ModelAndView("admin-urls");
-        result.addObject("username", authentication.getName());
-        result.addObject("usersList", adminService.getAllUsers());
-        result.addObject("userUrls", urlService.getActiveUrl());
+        ModelAndView result = new ModelAndView(MODEL_ADMIN_URLS);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrl());
         return result;
     }
 
     @GetMapping("/inactive")
     public ModelAndView getAllUsersInactiveLinks(Authentication authentication) {
-        ModelAndView result = new ModelAndView("admin-urls");
-        result.addObject("username", authentication.getName());
-        result.addObject("usersList", adminService.getAllUsers());
-        result.addObject("userUrlsInactive", urlService.getInactiveUrl());
+        ModelAndView result = new ModelAndView(MODEL_ADMIN_URLS);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrl());
         return result;
     }
 
@@ -62,11 +64,11 @@ public class AdminUrlsWebController {
 
     @GetMapping(value = "/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id, Authentication authentication) {
-        ModelAndView result = new ModelAndView("edit");
-        result.addObject("username", authentication.getName());
-        result.addObject("urls", urlService.getById(id));
-        result.addObject("id", id);
-        result.addObject("fromAdminPage", "true");
+        ModelAndView result = new ModelAndView(MODEL_EDIT);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getById(id));
+        result.addObject(ATTRIBUTE_ID, id);
+        result.addObject(ATTRIBUTE_FROM_ADMIN_PAGE, "true");
         return result;
     }
 
@@ -84,11 +86,11 @@ public class AdminUrlsWebController {
 
     @GetMapping("/{userId}")
     public ModelAndView allUserUrls(@PathVariable("userId") Long userId, Authentication authentication) {
-        ModelAndView result = new ModelAndView("admin-urls");
-        result.addObject("username", authentication.getName());
-        result.addObject("usersList", adminService.getAllUsers());
-        result.addObject("userUrls", adminService.getActiveUrlsForSelectedUser(userId));
-        result.addObject("userUrlsInactive", adminService.getInactiveUrlsForSelectedUser(userId));
+        ModelAndView result = new ModelAndView(MODEL_ADMIN_URLS);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
+        result.addObject(ATTRIBUTE_USER_URLS, adminService.getActiveUrlsForSelectedUser(userId));
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, adminService.getInactiveUrlsForSelectedUser(userId));
         return result;
     }
 }

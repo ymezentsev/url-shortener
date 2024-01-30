@@ -12,6 +12,8 @@ import ua.goit.urlshortener.url.service.UrlService;
 
 import java.util.List;
 
+import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
+
 @Service
 @RequiredArgsConstructor
 public class UrlWebService {
@@ -27,12 +29,12 @@ public class UrlWebService {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .toList();
 
-        ModelAndView result = new ModelAndView("edit");
-        result.addObject("errors", errors);
-        result.addObject("username", authentication.getName());
-        result.addObject("urls", updateUrlRequest);
-        result.addObject("id", id);
-        result.addObject("fromAdminPage", fromAdminPage);
+        ModelAndView result = new ModelAndView(MODEL_EDIT);
+        result.addObject(ATTRIBUTE_ERRORS, errors);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_URLS, updateUrlRequest);
+        result.addObject(ATTRIBUTE_ID, id);
+        result.addObject(ATTRIBUTE_FROM_ADMIN_PAGE, fromAdminPage);
         return result;
     }
 
@@ -40,25 +42,25 @@ public class UrlWebService {
         try {
             urlService.updateUrl(id, updateUrlRequest, authentication);
         } catch (Exception e) {
-            ModelAndView result = new ModelAndView("edit");
-            result.addObject("errors", e.getMessage());
-            result.addObject("username", authentication.getName());
-            result.addObject("urls", updateUrlRequest);
-            result.addObject("id", id);
-            result.addObject("fromAdminPage", fromAdminPage);
+            ModelAndView result = new ModelAndView(MODEL_EDIT);
+            result.addObject(ATTRIBUTE_ERRORS, e.getMessage());
+            result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+            result.addObject(ATTRIBUTE_URLS, updateUrlRequest);
+            result.addObject(ATTRIBUTE_ID, id);
+            result.addObject(ATTRIBUTE_FROM_ADMIN_PAGE, fromAdminPage);
             return result;
         }
 
-        ModelAndView result = new ModelAndView("all-user");
+        ModelAndView result = new ModelAndView(MODEL_ALL_USER);
         if (fromAdminPage) {
-            result = new ModelAndView("admin-urls");
-            result.addObject("username", authentication.getName());
-            result.addObject("userUrls", urlService.getActiveUrl());
-            result.addObject("userUrlsInactive", urlService.getInactiveUrl());
+            result = new ModelAndView(MODEL_ADMIN_URLS);
+            result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+            result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrl());
+            result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrl());
         } else {
-            result.addObject("username", authentication.getName());
-            result.addObject("userUrls", urlService.getActiveUrlUser(authentication));
-            result.addObject("userUrlsInactive", urlService.getInactiveUrlUser(authentication));
+            result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+            result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrlUser(authentication));
+            result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrlUser(authentication));
         }
         return result;
     }
@@ -70,9 +72,9 @@ public class UrlWebService {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .toList();
 
-        ModelAndView result = new ModelAndView("create");
-        result.addObject("errors", errors);
-        result.addObject("username", authentication.getName());
+        ModelAndView result = new ModelAndView(MODEL_CREATE);
+        result.addObject(ATTRIBUTE_ERRORS, errors);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
         return result;
     }
 
@@ -80,15 +82,15 @@ public class UrlWebService {
         try {
             urlService.createUrl(createUrlRequest, authentication);
         } catch (Exception e) {
-            ModelAndView result = new ModelAndView("create");
-            result.addObject("errors", e.getMessage());
-            result.addObject("username", authentication.getName());
+            ModelAndView result = new ModelAndView(MODEL_CREATE);
+            result.addObject(ATTRIBUTE_ERRORS, e.getMessage());
+            result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
             return result;
         }
-        ModelAndView result = new ModelAndView("all-user");
-        result.addObject("username", authentication.getName());
-        result.addObject("userUrls", urlService.getActiveUrlUser(authentication));
-        result.addObject("userUrlsInactive", urlService.getInactiveUrlUser(authentication));
+        ModelAndView result = new ModelAndView(MODEL_ALL_USER);
+        result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrlUser(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrlUser(authentication));
         return result;
     }
 }
