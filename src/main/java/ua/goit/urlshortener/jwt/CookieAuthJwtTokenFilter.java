@@ -56,6 +56,7 @@ public final class CookieAuthJwtTokenFilter extends OncePerRequestFilter {
                 String token = jwtUtils.generateJwtToken(authentication);
 
                 Cookie jwtCookie = new Cookie("jwtToken", token);
+                jwtCookie.setHttpOnly(true);
                 jwtCookie.setPath("/");
                 jwtCookie.setMaxAge(COOKIE_LIFE_IN_SEC);
                 response.addCookie(jwtCookie);
