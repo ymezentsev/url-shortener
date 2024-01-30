@@ -52,7 +52,7 @@ public class UrlWebService {
         }
 
         ModelAndView result = new ModelAndView(MODEL_ALL_USER);
-        if (fromAdminPage) {
+        if (Boolean.TRUE.equals(fromAdminPage)) {
             result = new ModelAndView(MODEL_ADMIN_URLS);
             result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
             result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrl());

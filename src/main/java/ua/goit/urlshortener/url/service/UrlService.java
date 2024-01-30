@@ -24,7 +24,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static ua.goit.urlshortener.url.UrlEntity.VALID_DAYS;
 
@@ -35,6 +34,9 @@ public class UrlService {
     private final UrlRepository urlRepository;
     private final ShortLinkGenerator shortLinkGenerator;
     private final UserService userService;
+
+    private static final String ACCESS_FORBIDDEN = "Access forbidden";
+    private static final String URL_NOT_FOUND = "Url with id %d not found";
 
     public List<UrlDto> getAll() {
         return urlMapper.toUrlDtoList(urlRepository.findAll());
@@ -65,11 +67,11 @@ public class UrlService {
 
     public void deleteById(Long id, Authentication authentication) {
         UrlEntity urlToDelete = urlRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Url with id " + id + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(URL_NOT_FOUND, id)));
 
         if (!urlToDelete.getUser().getUsername().equals(authentication.getName()) &&
                 !getAuthority(authentication).equals(Role.ADMIN.name())) {
-            throw new AccessDeniedException("Access forbidden");
+            throw new AccessDeniedException(ACCESS_FORBIDDEN);
         }
 
         UserEntity user = urlToDelete.getUser();
@@ -79,11 +81,11 @@ public class UrlService {
 
     public void updateUrl(Long id, UpdateUrlRequest request, Authentication authentication) {
         UrlEntity urlToUpdate = urlRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Url with id " + id + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(URL_NOT_FOUND, id)));
 
         if (!urlToUpdate.getUser().getUsername().equals(authentication.getName()) &&
                 !getAuthority(authentication).equals(Role.ADMIN.name())) {
-            throw new AccessDeniedException("Access forbidden");
+            throw new AccessDeniedException(ACCESS_FORBIDDEN);
         }
 
         if (!isLinkUnique(request.getShortUrl())) {
@@ -142,11 +144,11 @@ public class UrlService {
 
     public void prolongation(Long id, Authentication authentication) {
         UrlEntity urlToProlong = urlRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Url with id " + id + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(URL_NOT_FOUND, id)));
 
         if (!urlToProlong.getUser().getUsername().equals(authentication.getName()) &&
                 !getAuthority(authentication).equals(Role.ADMIN.name())) {
-            throw new AccessDeniedException("Access forbidden");
+            throw new AccessDeniedException(ACCESS_FORBIDDEN);
         }
 
         LocalDate newExpirationDate = urlToProlong.getExpirationDate().plusDays(VALID_DAYS);

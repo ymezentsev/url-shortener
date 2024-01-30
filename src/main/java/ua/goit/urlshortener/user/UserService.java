@@ -30,7 +30,7 @@ public class UserService {
         String username = userRequest.getUsername();
         String password = userRequest.getPassword();
 
-        if (userRepository.existsByUsername(username)) {
+        if (Boolean.TRUE.equals(userRepository.existsByUsername(username))) {
             throw new UserAlreadyExistException(username);
         }
 
