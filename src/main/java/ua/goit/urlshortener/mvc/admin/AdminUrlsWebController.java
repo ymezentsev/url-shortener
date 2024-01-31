@@ -57,8 +57,8 @@ public class AdminUrlsWebController {
     }
 
     @GetMapping(value = "/prolongation/{id}")
-    public String prolongation(@PathVariable("id") Long id, Authentication authentication) {
-        urlService.prolongation(id, authentication);
+    public String prolong(@PathVariable("id") Long id, Authentication authentication) {
+        urlService.prolong(id, authentication);
         return "redirect:/V2/admin/urls";
     }
 

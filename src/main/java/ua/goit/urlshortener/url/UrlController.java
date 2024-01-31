@@ -61,7 +61,7 @@ public class UrlController {
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Prolongation url's expiration date")
     public void prolongUrl(@PathVariable("id") Long id, Authentication authentication) {
-        urlService.prolongation(id, authentication);
+        urlService.prolong(id, authentication);
     }
 
     @GetMapping("/current/active")
