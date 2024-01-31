@@ -62,8 +62,6 @@ public class JwtSecurityConfiguration {
                                 "/V1/urls/current",
                                 "/V1/urls/current/active",
                                 "/V1/urls/current/inactive",
-
-
                                 "/V2/urls/user",
                                 "/V2/urls/list/user",
                                 "/V2/urls/list/auth",
@@ -76,8 +74,6 @@ public class JwtSecurityConfiguration {
                         ).authenticated()
                         .requestMatchers("V1/admin/users/**",
                                 "V1/admin/urls/**",
-
-
                                 "V2/admin/urls/**",
                                 "V2/admin/users/**").hasAuthority("ADMIN")
                         .anyRequest().permitAll())

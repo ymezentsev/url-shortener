@@ -142,7 +142,7 @@ public class UrlService {
         return urlMapper.toUrlDtoList(urlRepository.findInactiveUrls(currentDate));
     }
 
-    public void prolongation(Long id, Authentication authentication) {
+    public void prolong(Long id, Authentication authentication) {
         UrlEntity urlToProlong = urlRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(String.format(URL_NOT_FOUND, id)));
 
