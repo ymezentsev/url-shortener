@@ -56,12 +56,14 @@ public class JwtSecurityConfiguration {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/V1/urls/create",
-                                "/V1/urls/list/user",
                                 "/V1/urls/edit/**",
                                 "/V1/urls/delete/**",
                                 "/V1/urls/prolongation/**",
-                                "/V1/urls/list/user/active",
-                                "/V1/urls/list/user/inactive",
+                                "/V1/urls/current",
+                                "/V1/urls/current/active",
+                                "/V1/urls/current/inactive",
+
+
                                 "/V2/urls/user",
                                 "/V2/urls/list/user",
                                 "/V2/urls/list/auth",
@@ -74,6 +76,8 @@ public class JwtSecurityConfiguration {
                         ).authenticated()
                         .requestMatchers("V1/admin/users/**",
                                 "V1/admin/urls/**",
+
+
                                 "V2/admin/urls/**",
                                 "V2/admin/users/**").hasAuthority("ADMIN")
                         .anyRequest().permitAll())

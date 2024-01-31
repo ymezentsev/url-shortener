@@ -21,7 +21,7 @@ import java.util.List;
 public class UrlController {
     private final UrlService urlService;
 
-    @GetMapping("/list")
+    @GetMapping()
     @Operation(summary = "Get all urls")
     public List<UrlDto> getAllUrl() {
         return urlService.getAll();
@@ -34,10 +34,10 @@ public class UrlController {
         return urlService.createUrl(request, authentication);
     }
 
-    @GetMapping("/list/user")
+    @GetMapping("/current")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all urls for current user")
-    public List<UrlDto> allUserUrls(Authentication authentication) {
+    public List<UrlDto> getAllUserUrls(Authentication authentication) {
         return urlService.getAllUrlUser(authentication);
     }
 
@@ -53,38 +53,38 @@ public class UrlController {
     @DeleteMapping("/delete/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Delete url")
-    public void deleteById(@PathVariable("id") Long id, Authentication authentication) {
+    public void deleteUrl(@PathVariable("id") Long id, Authentication authentication) {
         urlService.deleteById(id, authentication);
     }
 
     @PostMapping("/prolongation/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Prolongation url's expiration date")
-    public void prolongationById(@PathVariable("id") Long id, Authentication authentication) {
+    public void prolongUrl(@PathVariable("id") Long id, Authentication authentication) {
         urlService.prolongation(id, authentication);
     }
 
-    @GetMapping("/list/user/active")
+    @GetMapping("/current/active")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all active urls for current user")
-    public List<UrlDto> getActiveUsersUrls(Authentication authentication) {
-        return urlService.getActiveUrlUser(authentication);
+    public List<UrlDto> getUserActiveUrls(Authentication authentication) {
+        return urlService.getUserActiveUrl(authentication);
     }
 
-    @GetMapping("/list/user/inactive")
+    @GetMapping("/current/inactive")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all inactive urls for current user")
-    public List<UrlDto> getInactiveUsersUrls(Authentication authentication) {
-        return urlService.getInactiveUrlUser(authentication);
+    public List<UrlDto> getUserInactiveUrls(Authentication authentication) {
+        return urlService.getUserInactiveUrl(authentication);
     }
 
-    @GetMapping("/list/active")
+    @GetMapping("/active")
     @Operation(summary = "Get all active urls")
     public List<UrlDto> getActiveUrls() {
         return urlService.getActiveUrl();
     }
 
-    @GetMapping("/list/inactive")
+    @GetMapping("/inactive")
     @Operation(summary = "Get all inactive urls")
     public List<UrlDto> getInactiveUrls() {
         return urlService.getInactiveUrl();

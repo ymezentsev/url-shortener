@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiQXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlVTRVIifV0sImlhdCI6MTcwNTY4OTI1NCwiZXhwIjoxNzA1Nzc1NjU0fQ.X1IaSrWHiBhyeLL7AZGaavmMSXl80iTSfA0_6TJZCFU",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiQXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IkFETUlOIn1dLCJpYXQiOjE3MDY3MTU0MTQsImV4cCI6MTcwNjgwMTgxNH0.hUPg6xW8OdHUBXy-CvRrO3eAFQ2RRjh3TpJWbEX4zSo",
 									"type": "string"
 								}
 							]
@@ -58,7 +58,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/V1/urls/list",
+							"raw": "http://localhost:8080/V1/urls",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -66,8 +66,7 @@
 							"port": "8080",
 							"path": [
 								"V1",
-								"urls",
-								"list"
+								"urls"
 							]
 						}
 					},
@@ -79,7 +78,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/V1/urls/list/active",
+							"raw": "http://localhost:8080/V1/urls/active",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -88,7 +87,6 @@
 							"path": [
 								"V1",
 								"urls",
-								"list",
 								"active"
 							]
 						}
@@ -101,7 +99,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/V1/urls/list/inactive",
+							"raw": "http://localhost:8080/V1/urls/inactive",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -110,7 +108,6 @@
 							"path": [
 								"V1",
 								"urls",
-								"list",
 								"inactive"
 							]
 						}
@@ -133,7 +130,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/V1/urls/list/user",
+							"raw": "http://localhost:8080/V1/urls/current",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -142,8 +139,7 @@
 							"path": [
 								"V1",
 								"urls",
-								"list",
-								"user"
+								"current"
 							]
 						}
 					},
@@ -165,7 +161,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/V1/urls/list/user/active",
+							"raw": "http://localhost:8080/V1/current/active",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -173,9 +169,7 @@
 							"port": "8080",
 							"path": [
 								"V1",
-								"urls",
-								"list",
-								"user",
+								"current",
 								"active"
 							]
 						}
@@ -198,7 +192,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/V1/urls/list/user/inactive",
+							"raw": "http://localhost:8080/V1/current/inactive",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -206,9 +200,7 @@
 							"port": "8080",
 							"path": [
 								"V1",
-								"urls",
-								"list",
-								"user",
+								"current",
 								"inactive"
 							]
 						}
@@ -427,7 +419,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/V1/admin/users/list",
+							"raw": "http://localhost:8080/V1/admin/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -436,8 +428,7 @@
 							"path": [
 								"V1",
 								"admin",
-								"users",
-								"list"
+								"users"
 							]
 						}
 					},

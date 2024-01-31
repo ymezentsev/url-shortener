@@ -17,7 +17,7 @@ import java.util.List;
 public class AdminUserController {
     private final AdminService adminService;
 
-    @GetMapping("/list")
+    @GetMapping()
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Get all users")
     public List<UserDto> getAllUsers() {

@@ -120,13 +120,13 @@ public class UrlService {
         return urlMapper.toUrlDtoList(urlRepository.findByUserId(userId));
     }
 
-    public List<UrlDto> getActiveUrlUser(Authentication authentication) {
+    public List<UrlDto> getUserActiveUrl(Authentication authentication) {
         Long userId = userService.findByUsername(authentication.getName()).getId();
         LocalDate currentDate = LocalDate.now();
         return urlMapper.toUrlDtoList(urlRepository.findActiveUrlsByUserId(userId, currentDate));
     }
 
-    public List<UrlDto> getInactiveUrlUser(Authentication authentication) {
+    public List<UrlDto> getUserInactiveUrl(Authentication authentication) {
         Long userId = userService.findByUsername(authentication.getName()).getId();
         LocalDate currentDate = LocalDate.now();
         return urlMapper.toUrlDtoList(urlRepository.findInactiveUrlsByUserId(userId, currentDate));

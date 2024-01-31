@@ -75,8 +75,8 @@ public class UrlWebController {
     public ModelAndView getAllUsersLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ALL_USER);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
-        result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrlUser(authentication));
-        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrlUser(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getUserActiveUrl(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getUserInactiveUrl(authentication));
         return result;
     }
 
@@ -84,7 +84,7 @@ public class UrlWebController {
     public ModelAndView getAllUsersActiveLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ALL_USER);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
-        result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrlUser(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getUserActiveUrl(authentication));
         return result;
     }
 
@@ -92,7 +92,7 @@ public class UrlWebController {
     public ModelAndView getAllUsersInactiveLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ALL_USER);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
-        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrlUser(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getUserInactiveUrl(authentication));
         return result;
     }
 

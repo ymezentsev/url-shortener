@@ -215,7 +215,7 @@ class UrlWebControllerTest {
         assertEquals("testadmin", usernameAttribute);
 
         assertTrue(model.getModel().containsKey("userUrls"));
-        assertEquals(3, urlService.getActiveUrlUser("testadmin").size());
+        assertEquals(3, urlService.getUserActiveUrl("testadmin").size());
     }
 
     @Test
@@ -237,7 +237,7 @@ class UrlWebControllerTest {
         assertEquals("testadmin", usernameAttribute);
 
         assertTrue(model.getModel().containsKey("userUrlsInactive"));
-        assertEquals(0, urlService.getInactiveUrlUser("testadmin").size());
+        assertEquals(0, urlService.getUserInactiveUrl("testadmin").size());
     }
 
     @Test

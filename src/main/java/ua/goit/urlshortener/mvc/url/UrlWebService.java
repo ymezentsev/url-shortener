@@ -59,8 +59,8 @@ public class UrlWebService {
             result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrl());
         } else {
             result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
-            result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrlUser(authentication));
-            result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrlUser(authentication));
+            result.addObject(ATTRIBUTE_USER_URLS, urlService.getUserActiveUrl(authentication));
+            result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getUserInactiveUrl(authentication));
         }
         return result;
     }
@@ -89,8 +89,8 @@ public class UrlWebService {
         }
         ModelAndView result = new ModelAndView(MODEL_ALL_USER);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
-        result.addObject(ATTRIBUTE_USER_URLS, urlService.getActiveUrlUser(authentication));
-        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getInactiveUrlUser(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS, urlService.getUserActiveUrl(authentication));
+        result.addObject(ATTRIBUTE_USER_URLS_INACTIVE, urlService.getUserInactiveUrl(authentication));
         return result;
     }
 }
