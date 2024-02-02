@@ -14,17 +14,17 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 public class UrlShortenerApplicationTests {
-	@Container
-	@ServiceConnection
-	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
+    @Container
+    @ServiceConnection
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
-	@Autowired
-	private UrlController controller;
+    @Autowired
+    private UrlController controller;
 
-	@Test
-	void contextLoads() {
-			assertThat(controller).isNotNull();
-	}
+    @Test
+    void contextLoads() {
+        assertThat(controller).isNotNull();
+    }
 }
 
 

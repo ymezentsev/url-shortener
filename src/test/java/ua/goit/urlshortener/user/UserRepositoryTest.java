@@ -25,7 +25,7 @@ class UserRepositoryTest {
     @Test
     void findByUsernameTest() {
         assertAll(
-                () -> assertEquals("qwerTy12", userRepository.findByUsername("testadmin").orElseThrow().getPassword()),
+                () -> assertEquals("ADMIN", userRepository.findByUsername("testadmin").orElseThrow().getRole().name()),
                 () -> assertEquals(Optional.empty(), userRepository.findByUsername("test"))
         );
     }
