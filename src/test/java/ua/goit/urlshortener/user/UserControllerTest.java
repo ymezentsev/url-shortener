@@ -34,12 +34,12 @@ class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        RestAssured.baseURI = "http://localhost:" + port + "/V1/user";
+        RestAssured.baseURI = "http://localhost:" + port + "/V1/users";
     }
 
     @Test
     @DisplayName("Register new user")
-    void registerUser() {
+    void registerUserTest() {
         CreateUserRequest request = new CreateUserRequest();
         request.setUsername("newUser");
         request.setPassword("Password9");
@@ -54,7 +54,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Register new user with too short password")
-    void testRegisterUserWithUncorrect() {
+    void registerUserWithIncorrectDataTest() {
         CreateUserRequest request = new CreateUserRequest();
         request.setUsername("postgres");
         request.setPassword("123");
@@ -72,7 +72,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Login existing user")
-    void testLoginUser() {
+    void loginUserTest() {
         CreateUserRequest request = new CreateUserRequest();
         request.setUsername("testadmin");
         request.setPassword("qwerTy12");
@@ -91,7 +91,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Bad login credentials")
-    void testBadloginUserCredentials() {
+    void loginUserWithBadCredentialsTest() {
         CreateUserRequest request = new CreateUserRequest();
         request.setUsername("testadmin");
         request.setPassword("password");
