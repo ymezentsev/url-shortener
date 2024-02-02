@@ -11,12 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface UrlRepository extends JpaRepository<UrlEntity, Long> {
-    @Query("SELECT u FROM UrlEntity u WHERE u.user.id = :userId AND u.expirationDate > :currentDate")
-    List<UrlEntity> findActiveUrlsByUserId(@Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
-
     List<UrlEntity> findByUserId(Long id);
 
     Optional<UrlEntity> findByShortUrl(String shortUrl);
+
+    @Query("SELECT u FROM UrlEntity u WHERE u.user.id = :userId AND u.expirationDate > :currentDate")
+    List<UrlEntity> findActiveUrlsByUserId(@Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
 
     @Query("SELECT u FROM UrlEntity u WHERE u.user.id = :userId AND u.expirationDate <= :currentDate")
     List<UrlEntity> findInactiveUrlsByUserId(@Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
