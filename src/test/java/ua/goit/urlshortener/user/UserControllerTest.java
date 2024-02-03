@@ -36,9 +36,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Register new user")
     void registerUserTest() {
-        CreateUserRequest request = new CreateUserRequest();
-        request.setUsername("newUser");
-        request.setPassword("Password9");
+        CreateUserRequest request = new CreateUserRequest("newUser", "Password9");
         given()
                 .contentType(ContentType.JSON)
                 .body(request)
@@ -51,10 +49,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Register new user with too short password")
     void registerUserWithIncorrectDataTest() {
-        CreateUserRequest request = new CreateUserRequest();
-        request.setUsername("postgres");
-        request.setPassword("123");
-
+        CreateUserRequest request = new CreateUserRequest("postgres", "123");
         given()
                 .contentType(ContentType.JSON)
                 .body(request)
@@ -69,10 +64,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Login existing user")
     void loginUserTest() {
-        CreateUserRequest request = new CreateUserRequest();
-        request.setUsername("testadmin");
-        request.setPassword("qwerTy12");
-
+        CreateUserRequest request = new CreateUserRequest("testadmin", "qwerTy12");
         String loginUser = given()
                 .contentType(ContentType.JSON)
                 .body(request)
@@ -88,10 +80,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Bad login credentials")
     void loginUserWithBadCredentialsTest() {
-        CreateUserRequest request = new CreateUserRequest();
-        request.setUsername("testadmin");
-        request.setPassword("password");
-
+        CreateUserRequest request = new CreateUserRequest("testadmin", "password");
         given()
                 .contentType(ContentType.JSON)
                 .body(request)

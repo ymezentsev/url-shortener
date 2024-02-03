@@ -37,9 +37,7 @@ class UserServiceTest {
 
     @Test
     void registerUserTest() {
-        CreateUserRequest createUserRequest = new CreateUserRequest();
-        createUserRequest.setUsername("newUserTest");
-        createUserRequest.setPassword("Password9");
+        CreateUserRequest createUserRequest = new CreateUserRequest("newUserTest", "Password9");
 
         userService.registerUser(createUserRequest);
         assertNotNull(userService.findByUsername("newUserTest"));
@@ -47,9 +45,7 @@ class UserServiceTest {
 
     @Test
     void registerUserThrowExceptionTest() {
-        CreateUserRequest createUserRequest = new CreateUserRequest();
-        createUserRequest.setUsername("testadmin");
-        createUserRequest.setPassword("qwerTy12");
+        CreateUserRequest createUserRequest = new CreateUserRequest("testadmin", "qwerTy12");
 
         assertThrows(UserAlreadyExistException.class,
                 () -> userService.registerUser(createUserRequest));
@@ -57,10 +53,7 @@ class UserServiceTest {
 
     @Test
     void loginUserTest() {
-        CreateUserRequest createUserRequest = new CreateUserRequest();
-        createUserRequest.setUsername("testadmin");
-        createUserRequest.setPassword("qwerTy12");
-
+        CreateUserRequest createUserRequest = new CreateUserRequest("testadmin", "qwerTy12");
         String jwtTokenRegex = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0YWRtaW4iLCJBdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaWF0IjoxNzA1NjU0NTc2LCJleHAiOjE3MDU3NDA5NzZ9.OHofMISL71EBCuQp4uMjC2pjyyXn8kgktMO0Idaf7lg";
 
         String generatedJwtToken = userService.loginUser(createUserRequest);
