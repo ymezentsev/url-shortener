@@ -31,8 +31,7 @@ class UserServiceTest {
     @Test
     void findByUsernameThrowExceptionTest() {
         assertThrows(NoSuchElementException.class,
-                () -> userService.findByUsername("test"),
-                "There isn't user with username: test");
+                () -> userService.findByUsername("test"));
     }
 
     @Test

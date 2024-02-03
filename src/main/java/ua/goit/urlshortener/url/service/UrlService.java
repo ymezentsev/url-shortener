@@ -79,6 +79,7 @@ public class UrlService {
         urlRepository.deleteById(id);
     }
 
+    @Transactional
     public void updateUrl(Long id, UpdateUrlRequest request, Authentication authentication) {
         UrlEntity urlToUpdate = urlRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(String.format(URL_NOT_FOUND, id)));
@@ -111,6 +112,7 @@ public class UrlService {
         urlRepository.save(urlToUpdate);
     }
 
+    @Transactional
     public UrlDto getById(Long id) {
         return urlMapper.toUrlDto(urlRepository.getReferenceById(id));
     }

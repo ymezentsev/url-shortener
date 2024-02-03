@@ -33,7 +33,7 @@ public class UrlEntity {
     @Column
     private String description;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
