@@ -100,7 +100,7 @@ public class UrlWebController {
     public ModelAndView edit(@PathVariable("id") Long id, Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_EDIT);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
-        result.addObject(ATTRIBUTE_USER_URLS, urlService.getById(id));
+        result.addObject(ATTRIBUTE_URLS, urlService.getById(id));
         result.addObject(ATTRIBUTE_ID, id);
         return result;
     }
