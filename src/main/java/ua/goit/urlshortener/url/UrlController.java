@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class UrlController {
     @PostMapping("/create")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Create short url")
-    public UrlDto createUrl(@RequestBody CreateUrlRequest request, Authentication authentication) {
+    public UrlDto createUrl(@Valid @RequestBody CreateUrlRequest request, Authentication authentication) {
         return urlService.createUrl(request, authentication);
     }
 
@@ -45,7 +46,7 @@ public class UrlController {
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Url edit")
     public void updateUrl(@PathVariable("id") Long id,
-                          @RequestBody UpdateUrlRequest request,
+                          @Valid @RequestBody UpdateUrlRequest request,
                           Authentication authentication) {
         urlService.updateUrl(id, request, authentication);
     }
