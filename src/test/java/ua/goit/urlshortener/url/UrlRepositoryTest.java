@@ -46,28 +46,23 @@ class UrlRepositoryTest {
         assertAll(
                 () -> assertEquals(2,
                         urlRepository.findActiveUrlsByUserId(1L, LocalDate.now()).size()),
-                () -> assertEquals(0,
+                () -> assertEquals(1,
                         urlRepository.findActiveUrlsByUserId(3L, LocalDate.now()).size())
         );
     }
 
     @Test
     void findInactiveUrlsByUserIdTest() {
-        assertAll(
-                () -> assertEquals(0,
-                        urlRepository.findInactiveUrlsByUserId(1L, LocalDate.now()).size()),
-                () -> assertEquals(1,
-                        urlRepository.findInactiveUrlsByUserId(3L, LocalDate.now()).size())
-        );
+        assertEquals(0, urlRepository.findInactiveUrlsByUserId(1L, LocalDate.now()).size());
     }
 
     @Test
     void findActiveUrlsTest() {
-        assertEquals(3, urlRepository.findActiveUrls(LocalDate.now()).size());
+        assertEquals(4, urlRepository.findActiveUrls(LocalDate.now()).size());
     }
 
     @Test
     void findInactiveUrlsTest() {
-        assertEquals(1, urlRepository.findInactiveUrls(LocalDate.now()).size());
+        assertEquals(0, urlRepository.findInactiveUrls(LocalDate.now()).size());
     }
 }

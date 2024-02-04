@@ -50,7 +50,7 @@ class UrlServiceTest {
     void cleanAndPopulateDb() {
         urlRepository.deleteAll();
 
-        urlRepository.save(new UrlEntity(null, "testurl1", "https://some_long_named_portal.com/",
+        urlRepository.save(new UrlEntity(null, "testurl1", "https://google.com/",
                 "for test only1", userRepository.findById(1L).orElseThrow(),
                 LocalDate.now(), LocalDate.now().plusDays(10), 1));
 
