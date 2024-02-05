@@ -85,7 +85,6 @@ class UrlServiceTest {
     @Test
     void deleteByIdThrowIllegalArgumentExceptionTest() {
         Authentication authentication = getAuthentication("ADMIN");
-
         assertThrows(IllegalArgumentException.class,
                 () -> urlService.deleteById(1000L, authentication));
     }
@@ -93,7 +92,6 @@ class UrlServiceTest {
     @Test
     void deleteByIdThrowAccessDeniedExceptionTest() {
         Authentication authentication = getAuthentication("USER");
-
         assertThrows(AccessDeniedException.class,
                 () -> urlService.deleteById(geUrlIdByUsername("testadmin"), authentication));
     }
@@ -249,14 +247,12 @@ class UrlServiceTest {
     }
 
     private Authentication getAuthentication(String role) {
-        Authentication authentication;
         if (role.equals("USER")) {
-            authentication = new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
+            return new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
                     Collections.singleton(new SimpleGrantedAuthority("USER")));
         } else {
-            authentication = new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
+            return new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
                     Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
         }
-        return authentication;
     }
 }

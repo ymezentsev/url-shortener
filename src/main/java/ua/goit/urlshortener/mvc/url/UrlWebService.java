@@ -19,11 +19,11 @@ import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
 public class UrlWebService {
     private final UrlService urlService;
 
-    public ModelAndView getEditModelAndViewWithErrors(BindingResult bindingResult,
-                                                      UpdateUrlRequest updateUrlRequest,
-                                                      Long id,
-                                                      Boolean fromAdminPage,
-                                                      Authentication authentication) {
+    public ModelAndView getUpdateModelAndViewWithErrors(BindingResult bindingResult,
+                                                        UpdateUrlRequest updateUrlRequest,
+                                                        Long id,
+                                                        Boolean fromAdminPage,
+                                                        Authentication authentication) {
         List<String> errors = bindingResult.getAllErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
