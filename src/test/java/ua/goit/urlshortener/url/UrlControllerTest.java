@@ -61,9 +61,7 @@ class UrlControllerTest {
 
     @Test
     void createUrlTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://google.com", "valid url");
 
         given().contentType(ContentType.JSON)
@@ -78,9 +76,7 @@ class UrlControllerTest {
 
     @Test
     void createUrlWithIncorrectDataTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("", "incorrect url");
 
         given().contentType(ContentType.JSON)
@@ -95,9 +91,7 @@ class UrlControllerTest {
 
     @Test
     void getAllUserUrlsTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .when().get("/current")
@@ -109,9 +103,7 @@ class UrlControllerTest {
 
     @Test
     void updateUrlTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google", "http://google.com", "valid url");
 
         given().contentType(ContentType.JSON)
@@ -125,9 +117,7 @@ class UrlControllerTest {
 
     @Test
     void updateUrlWithIncorrectDataTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("", "http://google.com", "incorrect short url");
 
         given().contentType(ContentType.JSON)
@@ -143,9 +133,7 @@ class UrlControllerTest {
 
     @Test
     void deleteUrlTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
@@ -156,9 +144,7 @@ class UrlControllerTest {
 
     @Test
     void prolongUrlTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
@@ -169,9 +155,7 @@ class UrlControllerTest {
 
     @Test
     void getUserActiveUrlsTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .when().get("/current/active")
@@ -183,9 +167,7 @@ class UrlControllerTest {
 
     @Test
     void getUserInactiveUrlsTest() {
-        if (Objects.isNull(token.get())) {
-            loginUser();
-        }
+        loginUser();
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .when().get("/current/inactive")
@@ -227,8 +209,10 @@ class UrlControllerTest {
     }
 
     private void loginUser() {
-        CreateUserRequest request = new CreateUserRequest("testadmin", "qwerTy12");
-        token.set(userService.loginUser(request));
+        if (Objects.isNull(token.get())) {
+            CreateUserRequest request = new CreateUserRequest("testadmin", "qwerTy12");
+            token.set(userService.loginUser(request));
+        }
     }
 
     private Long getUrlId() {
