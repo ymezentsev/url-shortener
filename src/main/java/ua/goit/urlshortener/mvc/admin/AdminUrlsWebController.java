@@ -79,7 +79,7 @@ public class AdminUrlsWebController {
                                  @RequestParam(value = "fromAdminPage", defaultValue = "false") Boolean fromAdminPage,
                                  Authentication authentication) {
         if (bindingResult.hasErrors()) {
-            return urlWebService.getEditModelAndViewWithErrors(bindingResult, updateUrlRequest, id, fromAdminPage, authentication);
+            return urlWebService.getUpdateModelAndViewWithErrors(bindingResult, updateUrlRequest, id, fromAdminPage, authentication);
         }
         return urlWebService.updateUrl(id, updateUrlRequest, fromAdminPage, authentication);
     }
