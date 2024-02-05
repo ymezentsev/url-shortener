@@ -21,6 +21,7 @@ public class AdminService {
     private final UserMapper userMapper;
     private final UrlMapper urlMapper;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDto> getAllUsers() {
         return userMapper.toUserDtoList(userRepository.findAll());
     }
