@@ -11,13 +11,12 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import ua.goit.urlshortener.DBInitializer;
 import ua.goit.urlshortener.url.request.CreateUrlRequest;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
 import ua.goit.urlshortener.user.CreateUserRequest;
-import ua.goit.urlshortener.user.UserRepository;
 import ua.goit.urlshortener.user.UserService;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import static io.restassured.RestAssured.given;
@@ -39,14 +38,14 @@ class UrlControllerTest {
     UrlRepository urlRepository;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
-    UserService userService;
+    DBInitializer dbInitializer;
 
     @BeforeEach
     void setUp() {
-        cleanAndPopulateDb();
+        dbInitializer.cleanAndPopulateUrlTable();
         RestAssured.baseURI = "http://localhost:" + port + "/V1/urls";
     }
 
@@ -147,7 +146,6 @@ class UrlControllerTest {
         if (Objects.isNull(token.get())) {
             loginUser();
         }
-
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
@@ -161,7 +159,6 @@ class UrlControllerTest {
         if (Objects.isNull(token.get())) {
             loginUser();
         }
-
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
@@ -229,32 +226,12 @@ class UrlControllerTest {
                 .body(containsString("Google"));
     }
 
-    private void cleanAndPopulateDb() {
-        urlRepository.deleteAll();
-
-        urlRepository.save(new UrlEntity(null, "testurl1", "https://google.com/",
-                "for test only1", userRepository.findById(1L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
-
-        urlRepository.save(new UrlEntity(null, "testurl2", "https://some_long_named_portal.com/",
-                "for test only2", userRepository.findById(1L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
-
-        urlRepository.save(new UrlEntity(null, "testurl3", "https://some_long_named_portal.com/",
-                "for test only3", userRepository.findById(2L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
-
-        urlRepository.save(new UrlEntity(null, "testurl4", "https://some_long_named_portal.com/",
-                "for test only4", userRepository.findById(3L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
-    }
-
     private void loginUser() {
         CreateUserRequest request = new CreateUserRequest("testadmin", "qwerTy12");
         token.set(userService.loginUser(request));
     }
 
-    private Long getUrlId(){
+    private Long getUrlId() {
         return urlRepository.findByUserId(1L).stream()
                 .map(UrlEntity::getId)
                 .findFirst()

@@ -14,14 +14,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import ua.goit.urlshortener.DBInitializer;
 import ua.goit.urlshortener.url.UrlDto;
 import ua.goit.urlshortener.url.UrlEntity;
-import ua.goit.urlshortener.url.UrlRepository;
 import ua.goit.urlshortener.url.exceptions.AlreadyExistUrlException;
 import ua.goit.urlshortener.url.exceptions.NotAccessibleException;
 import ua.goit.urlshortener.url.request.CreateUrlRequest;
 import ua.goit.urlshortener.url.request.UpdateUrlRequest;
-import ua.goit.urlshortener.user.UserRepository;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -38,33 +37,16 @@ class UrlServiceTest {
 
     @Autowired
     UrlService urlService;
+
     @Autowired
-    UrlRepository urlRepository;
-    @Autowired
-    UserRepository userRepository;
+    DBInitializer dbInitializer;
 
     @Mock
     HttpServletResponse response;
 
     @BeforeEach
-    void cleanAndPopulateDb() {
-        urlRepository.deleteAll();
-
-        urlRepository.save(new UrlEntity(null, "testurl1", "https://google.com/",
-                "for test only1", userRepository.findById(1L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
-
-        urlRepository.save(new UrlEntity(null, "testurl2", "https://some_long_named_portal.com/",
-                "for test only2", userRepository.findById(1L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
-
-        urlRepository.save(new UrlEntity(null, "testurl3", "https://some_long_named_portal.com/",
-                "for test only3", userRepository.findById(2L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
-
-        urlRepository.save(new UrlEntity(null, "testurl4", "https://some_long_named_portal.com/",
-                "for test only4", userRepository.findById(3L).orElseThrow(),
-                LocalDate.now(), LocalDate.now().plusDays(10), 1));
+    void setUp() {
+        dbInitializer.cleanAndPopulateUrlTable();
     }
 
     @Test
@@ -75,9 +57,7 @@ class UrlServiceTest {
     @Test
     void createUrlTest() {
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://google.com", "valid url");
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
+        Authentication authentication = getAuthentication("ADMIN");
 
         assertAll(
                 () -> assertNotNull(urlService.createUrl(createUrlRequest, authentication).getShortUrl()),
@@ -88,9 +68,7 @@ class UrlServiceTest {
     @Test
     void createUrlThrowExceptionTest() {
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://wrongUrl.com", "incorrect url");
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
+        Authentication authentication = getAuthentication("ADMIN");
 
         assertThrows(NotAccessibleException.class,
                 () -> urlService.createUrl(createUrlRequest, authentication));
@@ -98,25 +76,15 @@ class UrlServiceTest {
 
     @Test
     void deleteByIdTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
+        Authentication authentication = getAuthentication("USER");
 
-        Long urlIdToDelete = urlService.getAll().stream()
-                .filter(urlDto -> urlDto.getUsername().equals("testuser1"))
-                .map(UrlDto::getId)
-                .findFirst()
-                .orElseThrow();
-
-        urlService.deleteById(urlIdToDelete, authentication);
+        urlService.deleteById(geUrlIdByUsername("testuser1"), authentication);
         assertEquals(3, urlService.getAll().size());
     }
 
     @Test
     void deleteByIdThrowIllegalArgumentExceptionTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
+        Authentication authentication = getAuthentication("ADMIN");
 
         assertThrows(IllegalArgumentException.class,
                 () -> urlService.deleteById(1000L, authentication));
@@ -124,37 +92,21 @@ class UrlServiceTest {
 
     @Test
     void deleteByIdThrowAccessDeniedExceptionTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
-
-        Long urlIdToDelete = urlService.getAll().stream()
-                .filter(urlDto -> urlDto.getUsername().equals("testadmin"))
-                .map(UrlDto::getId)
-                .findFirst()
-                .orElseThrow();
+        Authentication authentication = getAuthentication("USER");
 
         assertThrows(AccessDeniedException.class,
-                () -> urlService.deleteById(urlIdToDelete, authentication));
+                () -> urlService.deleteById(geUrlIdByUsername("testadmin"), authentication));
     }
 
     @Test
     void updateUrlTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google.com", "valid url");
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
+        Authentication authentication = getAuthentication("USER");
 
-        Long urlIdToUpdate = urlService.getAll().stream()
-                .filter(urlDto -> urlDto.getUsername().equals("testuser1"))
-                .map(UrlDto::getId)
-                .findFirst()
-                .orElseThrow();
-
-        urlService.updateUrl(urlIdToUpdate, updateUrlRequest, authentication);
+        urlService.updateUrl(geUrlIdByUsername("testuser1"), updateUrlRequest, authentication);
         assertAll(
-                () -> assertEquals("google", urlService.getById(urlIdToUpdate).getShortUrl()),
+                () -> assertEquals("google", urlService.getById(geUrlIdByUsername("testuser1")).getShortUrl()),
                 () -> assertEquals(4, urlService.getAll().size())
         );
     }
@@ -163,9 +115,7 @@ class UrlServiceTest {
     void updateUrlThrowIllegalArgumentExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google.com", "valid url");
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
+        Authentication authentication = getAuthentication("USER");
 
         assertThrows(IllegalArgumentException.class,
                 () -> urlService.updateUrl(1000L, updateUrlRequest, authentication));
@@ -175,54 +125,30 @@ class UrlServiceTest {
     void updateUrlThrowAccessDeniedExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google.com", "valid url");
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
-
-        Long urlIdToUpdate = urlService.getAll().stream()
-                .filter(urlDto -> urlDto.getUsername().equals("testadmin"))
-                .map(UrlDto::getId)
-                .findFirst()
-                .orElseThrow();
+        Authentication authentication = getAuthentication("USER");
 
         assertThrows(AccessDeniedException.class,
-                () -> urlService.updateUrl(urlIdToUpdate, updateUrlRequest, authentication));
+                () -> urlService.updateUrl(geUrlIdByUsername("testadmin"), updateUrlRequest, authentication));
     }
 
     @Test
     void updateUrlThrowAlreadyExistUrlExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("testurl1",
                 "http://google.com", "incorrect short url");
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
-
-        Long urlIdToUpdate = urlService.getAll().stream()
-                .filter(urlDto -> urlDto.getUsername().equals("testuser1"))
-                .map(UrlDto::getId)
-                .findFirst()
-                .orElseThrow();
+        Authentication authentication = getAuthentication("USER");
 
         assertThrows(AlreadyExistUrlException.class,
-                () -> urlService.updateUrl(urlIdToUpdate, updateUrlRequest, authentication));
+                () -> urlService.updateUrl(geUrlIdByUsername("testuser1"), updateUrlRequest, authentication));
     }
 
     @Test
     void updateUrlThrowNotAccessibleExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google111.com", "incorrect url");
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
-
-        Long urlIdToUpdate = urlService.getAll().stream()
-                .filter(urlDto -> urlDto.getUsername().equals("testuser1"))
-                .map(UrlDto::getId)
-                .findFirst()
-                .orElseThrow();
+        Authentication authentication = getAuthentication("USER");
 
         assertThrows(NotAccessibleException.class,
-                () -> urlService.updateUrl(urlIdToUpdate, updateUrlRequest, authentication));
+                () -> urlService.updateUrl(geUrlIdByUsername("testuser1"), updateUrlRequest, authentication));
     }
 
     @Test
@@ -237,28 +163,19 @@ class UrlServiceTest {
 
     @Test
     void getAllUrlUserTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
-
+        Authentication authentication = getAuthentication("ADMIN");
         assertEquals(2, urlService.getAllUrlUser(authentication).size());
     }
 
     @Test
     void getUserActiveUrlTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
-
+        Authentication authentication = getAuthentication("ADMIN");
         assertEquals(2, urlService.getUserActiveUrl(authentication).size());
     }
 
     @Test
     void getUserInactiveUrTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
-
+        Authentication authentication = getAuthentication("ADMIN");
         assertEquals(0, urlService.getUserInactiveUrl(authentication).size());
     }
 
@@ -274,9 +191,7 @@ class UrlServiceTest {
 
     @Test
     void prolongTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
+        Authentication authentication = getAuthentication("USER");
 
         UrlDto urlToProlong = urlService.getAll().stream()
                 .filter(urlDto -> urlDto.getUsername().equals("testuser1"))
@@ -292,9 +207,7 @@ class UrlServiceTest {
 
     @Test
     void prolongThrowIllegalArgumentExceptionTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
+        Authentication authentication = getAuthentication("USER");
 
         assertThrows(IllegalArgumentException.class,
                 () -> urlService.prolong(1000L, authentication));
@@ -302,18 +215,10 @@ class UrlServiceTest {
 
     @Test
     void prolongThrowAccessDeniedExceptionTest() {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
-                        Collections.singleton(new SimpleGrantedAuthority("USER")));
-
-        Long urlIdToProlong = urlService.getAll().stream()
-                .filter(urlDto -> urlDto.getUsername().equals("testadmin"))
-                .map(UrlDto::getId)
-                .findFirst()
-                .orElseThrow();
+        Authentication authentication = getAuthentication("USER");
 
         assertThrows(AccessDeniedException.class,
-                () -> urlService.prolong(urlIdToProlong, authentication));
+                () -> urlService.prolong(geUrlIdByUsername("testadmin"), authentication));
     }
 
     @Test
@@ -333,5 +238,25 @@ class UrlServiceTest {
     void redirectToUrlThrowIllegalArgumentExceptionTest() {
         assertThrows(IllegalArgumentException.class,
                 () -> urlService.redirectToUrl("WrongUrl", response));
+    }
+
+    private Long geUrlIdByUsername(String username) {
+        return urlService.getAll().stream()
+                .filter(urlDto -> urlDto.getUsername().equals(username))
+                .map(UrlDto::getId)
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private Authentication getAuthentication(String role) {
+        Authentication authentication;
+        if (role.equals("USER")) {
+            authentication = new UsernamePasswordAuthenticationToken("testuser1", "qwerTy12",
+                    Collections.singleton(new SimpleGrantedAuthority("USER")));
+        } else {
+            authentication = new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
+                    Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
+        }
+        return authentication;
     }
 }

@@ -28,7 +28,7 @@ public class UserEntity {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", /*cascade = CascadeType.ALL, */fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<UrlEntity> urls = new ArrayList<>();
 }
