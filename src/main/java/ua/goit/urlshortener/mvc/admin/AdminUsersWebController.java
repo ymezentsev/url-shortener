@@ -28,11 +28,11 @@ public class AdminUsersWebController {
 
     @GetMapping(value = "/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id, Authentication authentication) {
-        return adminUserWebService.delete(id, authentication);
+        return adminUserWebService.deleteUser(id, authentication);
     }
 
     @GetMapping(value = "/edit/{id}")
     public ModelAndView setRole(@PathVariable("id") Long id, Authentication authentication) {
-        return adminUserWebService.changeRole(id, authentication);
+        return adminUserWebService.changeUserRole(id, authentication);
     }
 }

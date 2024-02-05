@@ -13,7 +13,7 @@ import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
 public class AdminUserWebService {
     private final AdminService adminService;
 
-    public ModelAndView delete(Long id, Authentication authentication) {
+    public ModelAndView deleteUser(Long id, Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ADMIN_USERS);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
 
@@ -26,7 +26,7 @@ public class AdminUserWebService {
         return result;
     }
 
-    public ModelAndView changeRole(Long id, Authentication authentication) {
+    public ModelAndView changeUserRole(Long id, Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ADMIN_USERS);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
 
