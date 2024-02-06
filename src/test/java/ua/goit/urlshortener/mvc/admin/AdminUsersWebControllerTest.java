@@ -6,16 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import java.util.Collections;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -50,8 +45,7 @@ class AdminUsersWebControllerTest {
     @Test
     @DisplayName("Delete user")
     void deleteUserTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/users/delete/2")
-                        .principal(getAuthentication()))
+        mockMvc.perform(get("/V2/admin/users/delete/2"))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
@@ -64,8 +58,7 @@ class AdminUsersWebControllerTest {
     @Test
     @DisplayName("Change user's role")
     void changeUserRoleTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/users/edit/3")
-                        .principal(getAuthentication()))
+        mockMvc.perform(get("/V2/admin/users/edit/3"))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
@@ -73,10 +66,5 @@ class AdminUsersWebControllerTest {
                         view().name(MODEL_ADMIN_USERS),
                         model().attributeExists(ATTRIBUTE_USERNAME, ATTRIBUTE_USERS)
                 );
-    }
-
-    private Authentication getAuthentication() {
-        return new UsernamePasswordAuthenticationToken("testadmin", "qwerTy12",
-                Collections.singleton(new SimpleGrantedAuthority("ADMIN")));
     }
 }

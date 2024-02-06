@@ -33,7 +33,7 @@ public class AdminUrlsWebController {
     }
 
     @GetMapping("/active")
-    public ModelAndView getAllUsersActiveLinks(Authentication authentication) {
+    public ModelAndView getAllActiveLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ADMIN_URLS);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
         result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
@@ -42,7 +42,7 @@ public class AdminUrlsWebController {
     }
 
     @GetMapping("/inactive")
-    public ModelAndView getAllUsersInactiveLinks(Authentication authentication) {
+    public ModelAndView getAllInactiveLinks(Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ADMIN_URLS);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
         result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
@@ -51,19 +51,19 @@ public class AdminUrlsWebController {
     }
 
     @GetMapping(value = "/delete/{id}")
-    public String delete(@PathVariable("id") Long id, Authentication authentication) {
+    public String deleteUrl(@PathVariable("id") Long id, Authentication authentication) {
         urlService.deleteById(id, authentication);
         return "redirect:/V2/admin/urls";
     }
 
     @GetMapping(value = "/prolongation/{id}")
-    public String prolong(@PathVariable("id") Long id, Authentication authentication) {
+    public String prolongUrl(@PathVariable("id") Long id, Authentication authentication) {
         urlService.prolong(id, authentication);
         return "redirect:/V2/admin/urls";
     }
 
     @GetMapping(value = "/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") Long id, Authentication authentication) {
+    public ModelAndView editUrl(@PathVariable("id") Long id, Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_EDIT);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
         result.addObject(ATTRIBUTE_URLS, urlService.getById(id));
@@ -73,11 +73,11 @@ public class AdminUrlsWebController {
     }
 
     @PostMapping(value = "/edit")
-    public ModelAndView postEdit(@Valid @ModelAttribute UpdateUrlRequest updateUrlRequest,
-                                 BindingResult bindingResult,
-                                 @RequestParam("id") Long id,
-                                 @RequestParam(value = "fromAdminPage", defaultValue = "false") Boolean fromAdminPage,
-                                 Authentication authentication) {
+    public ModelAndView postEditUrl(@Valid @ModelAttribute UpdateUrlRequest updateUrlRequest,
+                                    BindingResult bindingResult,
+                                    @RequestParam("id") Long id,
+                                    @RequestParam(value = "fromAdminPage", defaultValue = "false") Boolean fromAdminPage,
+                                    Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return urlWebService.getUpdateModelAndViewWithErrors(bindingResult, updateUrlRequest, id, fromAdminPage, authentication);
         }
@@ -85,7 +85,7 @@ public class AdminUrlsWebController {
     }
 
     @GetMapping("/{userId}")
-    public ModelAndView allUserUrls(@PathVariable("userId") Long userId, Authentication authentication) {
+    public ModelAndView allSelectedUserUrls(@PathVariable("userId") Long userId, Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_ADMIN_URLS);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
         result.addObject(ATTRIBUTE_USERS, adminService.getAllUsers());
