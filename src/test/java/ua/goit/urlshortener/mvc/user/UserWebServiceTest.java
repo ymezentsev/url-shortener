@@ -1,5 +1,6 @@
 package ua.goit.urlshortener.mvc.user;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ class UserWebServiceTest {
     BindingResult bindingResult;
 
     @Test
+    @DisplayName("Successful registration")
     void registerUserWithCorrectDataTest() {
         CreateUserRequest createUserRequest = new CreateUserRequest("test", "qwerTy12");
 
@@ -40,6 +42,7 @@ class UserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Fail registration")
     void registerUserWithIncorrectDataTest() {
         CreateUserRequest createUserRequest = new CreateUserRequest("testadmin", "qwerTy12");
 
@@ -51,6 +54,7 @@ class UserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Successful login")
     void loginUserWithCorrectDataTest() {
         CreateUserRequest createUserRequest = new CreateUserRequest("testuser1", "qwerTy12");
 
@@ -64,6 +68,7 @@ class UserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Fail login")
     void loginUserWithIncorrectDataTest() {
         CreateUserRequest createUserRequest = new CreateUserRequest("user", "qwerTy12");
 
@@ -75,6 +80,7 @@ class UserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Get ModelAndView with errors")
     void getModelAndViewWithErrorsTest() {
         when(bindingResult.getAllErrors()).thenReturn(Collections.emptyList());
         ModelAndView result = new ModelAndView(MODEL_LOGIN);

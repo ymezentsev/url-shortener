@@ -1,6 +1,7 @@
 package ua.goit.urlshortener.mvc.admin;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,6 +37,7 @@ class AdminUserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Successful delete user")
     void deleteUserWithCorrectDataTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView deleteUserWebModel = adminUserWebService.deleteUser(2L, authentication);
@@ -43,6 +45,7 @@ class AdminUserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Fail delete user")
     void deleteUserWithIncorrectDataTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView deleteUserWebModel = adminUserWebService.deleteUser(1L, authentication);
@@ -50,6 +53,7 @@ class AdminUserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Successful change user's role")
     void changeUserRoleWithCorrectDataTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView changeUserRoleWebModel = adminUserWebService.changeUserRole(3L, authentication);
@@ -57,6 +61,7 @@ class AdminUserWebServiceTest {
     }
 
     @Test
+    @DisplayName("Fail change user's role")
     void changeUserRoleWithIncorrectDataTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView changeUserRoleWebModel = adminUserWebService.changeUserRole(1L, authentication);

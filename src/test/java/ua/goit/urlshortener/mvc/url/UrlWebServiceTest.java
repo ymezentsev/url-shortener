@@ -1,5 +1,6 @@
 package ua.goit.urlshortener.mvc.url;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ class UrlWebServiceTest {
     BindingResult bindingResult;
 
     @Test
+    @DisplayName("Get ModelAndView for update-page with errors")
     void getUpdateModelAndViewWithErrorsTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("edited", "https://www.google.com/", "Edited");
 
@@ -52,6 +54,7 @@ class UrlWebServiceTest {
     }
 
     @Test
+    @DisplayName("Successful update url")
     void updateUrlWithCorrectDataFromAdminPageTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("edited", "https://www.google.com/", "Edited");
 
@@ -66,6 +69,7 @@ class UrlWebServiceTest {
     }
 
     @Test
+    @DisplayName("Fail update url from user-page")
     void updateUrlWithCorrectDataFromUserPageTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("edited", "https://www.google.com/", "Edited");
 
@@ -80,6 +84,7 @@ class UrlWebServiceTest {
     }
 
     @Test
+    @DisplayName("Fail update url from admin-page")
     void updateUrlWithIncorrectDataTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("edited", "https://www.google.com/", "Edited");
 
@@ -94,6 +99,7 @@ class UrlWebServiceTest {
     }
 
     @Test
+    @DisplayName("Get ModelAndView for create-page with errors")
     void getCreateModelAndViewWithErrorsTest() {
         when(bindingResult.getAllErrors()).thenReturn(Collections.emptyList());
         ModelAndView createUrlWebModel = urlWebService.getCreateModelAndViewWithErrors(bindingResult, getAuthentication());
@@ -106,6 +112,7 @@ class UrlWebServiceTest {
     }
 
     @Test
+    @DisplayName("Successful create url")
     void createUrlWithCorrectDataTest() {
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://google.com", "valid url");
 
@@ -119,6 +126,7 @@ class UrlWebServiceTest {
     }
 
     @Test
+    @DisplayName("Fail create url")
     void createUrlWithIncorrectDataTest() {
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://google1.com", "valid url");
 
