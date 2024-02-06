@@ -1,6 +1,7 @@
 package ua.goit.urlshortener.admin;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,11 +43,13 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Find all users")
     void getAllUsersTest() {
         assertEquals(3, adminService.getAllUsers().size());
     }
 
     @Test
+    @DisplayName("Successful delete user")
     void deleteUserByIdTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userIdToDelete = getUserIdByUsername("testuser1");
@@ -56,6 +59,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Fail delete user (user not exists)")
     void deleteUserByIdThrowIllegalArgumentExceptionTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -63,6 +67,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Fail delete user (user can't delete yourself)")
     void deleteUserByIdThrowIllegalArgumentExceptionWhenDeleteYourselfTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userIdToDelete = getUserIdByUsername("testadmin");
@@ -71,6 +76,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Successful change user's role")
     void changeUserRoleTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userIdToChangeRole = getUserIdByUsername("testuser1");
@@ -80,6 +86,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Fail change user's role (user not exists)")
     void changeUserRoleThrowIllegalArgumentExceptionTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -87,6 +94,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Fail change user's role (user can't change role for yourself)")
     void changeUserRoleThrowIllegalArgumentExceptionWhenDeleteYourselfTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userIdToDelete = getUserIdByUsername("testadmin");
@@ -95,6 +103,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Find all ulrs for selected user")
     void getUrlsForSelectedUserTest() {
         assertAll(
                 () -> assertEquals(2,
@@ -105,6 +114,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Find all active ulrs for selected user")
     void getActiveUrlsForSelectedUserTest() {
         assertAll(
                 () -> assertEquals(2,
@@ -115,6 +125,7 @@ class AdminServiceTest {
     }
 
     @Test
+    @DisplayName("Find all inactive ulrs for selected user")
     void getInactiveUrlsForSelectedUserTest() {
         assertAll(
                 () -> assertEquals(0,

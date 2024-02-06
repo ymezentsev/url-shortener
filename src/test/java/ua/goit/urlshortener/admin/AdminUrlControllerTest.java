@@ -3,6 +3,7 @@ package ua.goit.urlshortener.admin;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,6 +42,7 @@ class AdminUrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all ulrs for selected user")
     void getUrlsForSelectedUserTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
@@ -53,6 +55,7 @@ class AdminUrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all active ulrs for selected user")
     void getActiveUsersUrlsTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
@@ -65,6 +68,7 @@ class AdminUrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all inactive ulrs for selected user")
     void getInactiveUsersUrlsTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())

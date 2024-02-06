@@ -3,6 +3,7 @@ package ua.goit.urlshortener.admin;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,6 +47,7 @@ class AdminUserControllerTest {
     }
 
     @Test
+    @DisplayName("Find all users")
     void getAllUsersTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
@@ -57,6 +59,7 @@ class AdminUserControllerTest {
     }
 
     @Test
+    @DisplayName("Change user's role")
     void changeUserRoleTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
@@ -67,6 +70,7 @@ class AdminUserControllerTest {
     }
 
     @Test
+    @DisplayName("Delete user")
     void deleteUserTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
