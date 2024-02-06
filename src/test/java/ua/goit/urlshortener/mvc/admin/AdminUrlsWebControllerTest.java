@@ -75,7 +75,7 @@ class AdminUrlsWebControllerTest {
     @Test
     @DisplayName("Delete url")
     void deleteUrlTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/urls/delete/4"))
+        mockMvc.perform(get("/V2/admin/urls/delete/{id}", 4))
                 .andDo(print())
                 .andExpectAll(
                         status().is3xxRedirection(),
@@ -86,7 +86,7 @@ class AdminUrlsWebControllerTest {
     @Test
     @DisplayName("Prolong expiration date of url")
     void prolongUrlTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/urls/prolongation/3"))
+        mockMvc.perform(get("/V2/admin/urls/prolongation/{id}", 3))
                 .andDo(print())
                 .andExpectAll(
                         status().is3xxRedirection(),
@@ -97,7 +97,7 @@ class AdminUrlsWebControllerTest {
     @Test
     @DisplayName("Open a page for update url")
     void editUrlTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/urls/edit/2"))
+        mockMvc.perform(get("/V2/admin/urls/edit/{id}", 2))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
@@ -152,7 +152,7 @@ class AdminUrlsWebControllerTest {
     @Test
     @DisplayName("Find all urls for selected user")
     void allSelectedUserUrlsTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/urls/2"))
+        mockMvc.perform(get("/V2/admin/urls/{userId}", 2))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),

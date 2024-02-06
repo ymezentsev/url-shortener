@@ -45,7 +45,7 @@ class AdminUsersWebControllerTest {
     @Test
     @DisplayName("Delete user")
     void deleteUserTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/users/delete/2"))
+        mockMvc.perform(get("/V2/admin/users/delete/{id}", 2))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
@@ -58,7 +58,7 @@ class AdminUsersWebControllerTest {
     @Test
     @DisplayName("Change user's role")
     void changeUserRoleTest() throws Exception {
-        mockMvc.perform(get("/V2/admin/users/edit/3"))
+        mockMvc.perform(get("/V2/admin/users/edit/{id}", 3))
                 .andDo(print())
                 .andExpectAll(
                         status().isOk(),
