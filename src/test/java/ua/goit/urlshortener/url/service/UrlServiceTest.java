@@ -2,6 +2,7 @@ package ua.goit.urlshortener.url.service;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +51,13 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Find all urls")
     void getAllTest() {
         assertEquals(4, urlService.getAll().size());
     }
 
     @Test
+    @DisplayName("Successful create new url")
     void createUrlTest() {
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://google.com", "valid url");
         Authentication authentication = getAuthentication("ADMIN");
@@ -66,6 +69,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail create new url")
     void createUrlThrowExceptionTest() {
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://wrongUrl.com", "incorrect url");
         Authentication authentication = getAuthentication("ADMIN");
@@ -75,6 +79,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Successful delete url")
     void deleteByIdTest() {
         Authentication authentication = getAuthentication("USER");
 
@@ -83,6 +88,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail delete url (url not exists)")
     void deleteByIdThrowIllegalArgumentExceptionTest() {
         Authentication authentication = getAuthentication("ADMIN");
         assertThrows(IllegalArgumentException.class,
@@ -90,6 +96,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail delete url (access denied)")
     void deleteByIdThrowAccessDeniedExceptionTest() {
         Authentication authentication = getAuthentication("USER");
         assertThrows(AccessDeniedException.class,
@@ -97,6 +104,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Successful update url")
     void updateUrlTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google.com", "valid url");
@@ -110,6 +118,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail update url (url not exists)")
     void updateUrlThrowIllegalArgumentExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google.com", "valid url");
@@ -120,6 +129,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail update url (access denied)")
     void updateUrlThrowAccessDeniedExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google.com", "valid url");
@@ -130,6 +140,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail update url (short name already exists)")
     void updateUrlThrowAlreadyExistUrlExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("testurl1",
                 "http://google.com", "incorrect short url");
@@ -140,6 +151,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail update url (url not accessible)")
     void updateUrlThrowNotAccessibleExceptionTest() {
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google",
                 "http://google111.com", "incorrect url");
@@ -150,6 +162,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Find url by id")
     void getByIdTest() {
         Long idForTestUrl3 = urlService.getAll().stream()
                 .filter(urlDto -> urlDto.getShortUrl().equals("testurl3"))
@@ -160,34 +173,40 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Find all urls for current user")
     void getAllUrlUserTest() {
         Authentication authentication = getAuthentication("ADMIN");
         assertEquals(2, urlService.getAllUrlUser(authentication).size());
     }
 
     @Test
+    @DisplayName("Find all active urls for current user")
     void getUserActiveUrlTest() {
         Authentication authentication = getAuthentication("ADMIN");
         assertEquals(2, urlService.getUserActiveUrl(authentication).size());
     }
 
     @Test
+    @DisplayName("Find all inactive urls for current user")
     void getUserInactiveUrTest() {
         Authentication authentication = getAuthentication("ADMIN");
         assertEquals(0, urlService.getUserInactiveUrl(authentication).size());
     }
 
     @Test
+    @DisplayName("Find all active urls")
     void getActiveUrlTest() {
         assertEquals(4, urlService.getActiveUrl().size());
     }
 
     @Test
+    @DisplayName("Find all inactive urls")
     void getInactiveUrlTest() {
         assertEquals(0, urlService.getInactiveUrl().size());
     }
 
     @Test
+    @DisplayName("Successful prolongation url's expired date")
     void prolongTest() {
         Authentication authentication = getAuthentication("USER");
 
@@ -204,6 +223,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail prolongation url's expired date (url not exists)")
     void prolongThrowIllegalArgumentExceptionTest() {
         Authentication authentication = getAuthentication("USER");
 
@@ -212,6 +232,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail prolongation url's expired date (access denied)")
     void prolongThrowAccessDeniedExceptionTest() {
         Authentication authentication = getAuthentication("USER");
 
@@ -220,6 +241,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Successful redirect to url")
     void redirectToUrlTest() throws IOException {
         urlService.redirectToUrl("testurl1", response);
 
@@ -233,6 +255,7 @@ class UrlServiceTest {
     }
 
     @Test
+    @DisplayName("Fail redirect to url")
     void redirectToUrlThrowIllegalArgumentExceptionTest() {
         assertThrows(IllegalArgumentException.class,
                 () -> urlService.redirectToUrl("WrongUrl", response));

@@ -3,6 +3,7 @@ package ua.goit.urlshortener.url;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,6 +51,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all urls")
     void getAllUrlTest() {
         given().contentType(ContentType.JSON)
                 .when().get()
@@ -60,6 +62,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Successful create new url")
     void createUrlTest() {
         loginUser();
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("http://google.com", "valid url");
@@ -75,6 +78,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Fail create new url")
     void createUrlWithIncorrectDataTest() {
         loginUser();
         CreateUrlRequest createUrlRequest = new CreateUrlRequest("", "incorrect url");
@@ -90,6 +94,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all urls for current user")
     void getAllUserUrlsTest() {
         loginUser();
         given().contentType(ContentType.JSON)
@@ -102,6 +107,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Successful update url")
     void updateUrlTest() {
         loginUser();
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("google", "http://google.com", "valid url");
@@ -116,6 +122,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Fail update url")
     void updateUrlWithIncorrectDataTest() {
         loginUser();
         UpdateUrlRequest updateUrlRequest = new UpdateUrlRequest("", "http://google.com", "incorrect short url");
@@ -132,6 +139,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Successful delete url")
     void deleteUrlTest() {
         loginUser();
         given().contentType(ContentType.JSON)
@@ -143,6 +151,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Prolongation url's expired date")
     void prolongUrlTest() {
         loginUser();
         given().contentType(ContentType.JSON)
@@ -154,6 +163,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all active urls for current user")
     void getUserActiveUrlsTest() {
         loginUser();
         given().contentType(ContentType.JSON)
@@ -166,6 +176,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all inactive urls for current user")
     void getUserInactiveUrlsTest() {
         loginUser();
         given().contentType(ContentType.JSON)
@@ -178,6 +189,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all active urls")
     void getActiveUrlsTest() {
         given().contentType(ContentType.JSON)
                 .when().get("/active")
@@ -188,6 +200,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Find all inactive urls")
     void getInactiveUrlsTest() {
         given().contentType(ContentType.JSON)
                 .when().get("/inactive")
@@ -198,6 +211,7 @@ class UrlControllerTest {
     }
 
     @Test
+    @DisplayName("Redirect to url")
     void redirectToUrlTest() {
         given().contentType(ContentType.JSON)
                 .pathParam("shortUrl", "testurl1")

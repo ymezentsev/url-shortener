@@ -1,5 +1,6 @@
 package ua.goit.urlshortener.url;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,7 @@ class UrlRepositoryTest {
     UrlRepository urlRepository;
 
     @Test
+    @DisplayName("Find url by user's id")
     void findByUserIdTest() {
         assertAll(
                 () -> assertEquals(2, urlRepository.findByUserId(1L).size()),
@@ -33,6 +35,7 @@ class UrlRepositoryTest {
     }
 
     @Test
+    @DisplayName("Find url by short name")
     void findByShortUrlTest() {
         assertAll(
                 () -> assertEquals("for test only1",
@@ -42,6 +45,7 @@ class UrlRepositoryTest {
     }
 
     @Test
+    @DisplayName("Find all active urls for current user")
     void findActiveUrlsByUserIdTest() {
         assertAll(
                 () -> assertEquals(2,
@@ -52,16 +56,19 @@ class UrlRepositoryTest {
     }
 
     @Test
+    @DisplayName("Find all inactive urls for current user")
     void findInactiveUrlsByUserIdTest() {
         assertEquals(0, urlRepository.findInactiveUrlsByUserId(1L, LocalDate.now()).size());
     }
 
     @Test
+    @DisplayName("Find all active urls")
     void findActiveUrlsTest() {
         assertEquals(4, urlRepository.findActiveUrls(LocalDate.now()).size());
     }
 
     @Test
+    @DisplayName("Find all inactive urls")
     void findInactiveUrlsTest() {
         assertEquals(0, urlRepository.findInactiveUrls(LocalDate.now()).size());
     }
