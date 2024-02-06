@@ -47,7 +47,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Register new user with too short password")
+    @DisplayName("Incorrect register new user with too short password")
     void registerUserWithIncorrectDataTest() {
         CreateUserRequest request = new CreateUserRequest("postgres", "123");
         given()

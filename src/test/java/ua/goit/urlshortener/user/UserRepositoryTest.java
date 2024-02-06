@@ -1,5 +1,6 @@
 package ua.goit.urlshortener.user;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ class UserRepositoryTest {
     UserRepository userRepository;
 
     @Test
+    @DisplayName("Find user by username")
     void findByUsernameTest() {
         assertAll(
                 () -> assertEquals("ADMIN", userRepository.findByUsername("testadmin").orElseThrow().getRole().name()),
@@ -31,6 +33,7 @@ class UserRepositoryTest {
     }
 
     @Test
+    @DisplayName("Check if user exists")
     void existsByUsernameTest() {
         assertAll(
                 () -> assertTrue(userRepository.existsByUsername("testadmin")),
