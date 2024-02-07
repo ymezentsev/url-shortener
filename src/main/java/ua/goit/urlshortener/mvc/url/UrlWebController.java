@@ -97,7 +97,7 @@ public class UrlWebController {
     }
 
     @GetMapping(value = "/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") Long id, Authentication authentication) {
+    public ModelAndView editUrl(@PathVariable("id") Long id, Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_EDIT);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
         result.addObject(ATTRIBUTE_URLS, urlService.getById(id));
@@ -106,11 +106,11 @@ public class UrlWebController {
     }
 
     @PostMapping(value = "/edit")
-    public ModelAndView postEdit(@Valid @ModelAttribute UpdateUrlRequest updateUrlRequest,
-                                 BindingResult bindingResult,
-                                 @RequestParam("id") Long id,
-                                 @RequestParam(value = "fromAdminPage", defaultValue = "false") Boolean fromAdminPage,
-                                 Authentication authentication) {
+    public ModelAndView postEditUrl(@Valid @ModelAttribute UpdateUrlRequest updateUrlRequest,
+                                    BindingResult bindingResult,
+                                    @RequestParam("id") Long id,
+                                    @RequestParam(value = "fromAdminPage", defaultValue = "false") Boolean fromAdminPage,
+                                    Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return urlWebService.getUpdateModelAndViewWithErrors(bindingResult, updateUrlRequest, id, fromAdminPage, authentication);
         }
@@ -118,28 +118,28 @@ public class UrlWebController {
     }
 
     @GetMapping(value = "/delete/{id}")
-    public String delete(@PathVariable("id") Long id, Authentication authentication) {
+    public String deleteUrl(@PathVariable("id") Long id, Authentication authentication) {
         urlService.deleteById(id, authentication);
         return "redirect:/V2/urls/list/user";
     }
 
     @GetMapping(value = "/prolongation/{id}")
-    public String prolong(@PathVariable("id") Long id, Authentication authentication) {
+    public String prolongUrl(@PathVariable("id") Long id, Authentication authentication) {
         urlService.prolong(id, authentication);
         return "redirect:/V2/urls/list/user";
     }
 
     @GetMapping(value = "/create")
-    public ModelAndView create(Authentication authentication) {
+    public ModelAndView createUrl(Authentication authentication) {
         ModelAndView result = new ModelAndView(MODEL_CREATE);
         result.addObject(ATTRIBUTE_USERNAME, authentication.getName());
         return result;
     }
 
     @PostMapping(value = "/create")
-    public ModelAndView postCreate(@Valid @ModelAttribute CreateUrlRequest createUrlRequest,
-                                   BindingResult bindingResult,
-                                   Authentication authentication) {
+    public ModelAndView postCreateUrl(@Valid @ModelAttribute CreateUrlRequest createUrlRequest,
+                                      BindingResult bindingResult,
+                                      Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return urlWebService.getCreateModelAndViewWithErrors(bindingResult, authentication);
         }
