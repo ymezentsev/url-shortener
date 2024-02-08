@@ -32,7 +32,7 @@ class UserWebControllerTest {
     @Test
     @DisplayName("Open a page for registration")
     void getRegisterUserTest() throws Exception {
-        mockMvc.perform(get("/V2/user/register"))
+        mockMvc.perform(get("/V2/users/register"))
                 .andExpectAll(
                         status().isOk(),
                         content().contentType("text/html;charset=UTF-8"),
@@ -43,7 +43,7 @@ class UserWebControllerTest {
     @Test
     @DisplayName("Successful registration")
     void postRegisterUserWithCorrectDataTest() throws Exception {
-        mockMvc.perform(post("/V2/user/register")
+        mockMvc.perform(post("/V2/users/register")
                         .contentType("application/json")
                         .param("register", "true")
                         .param("username", "user")
@@ -59,7 +59,7 @@ class UserWebControllerTest {
     @Test
     @DisplayName("Fail registration")
     void postRegisterUserWithIncorrectDataTest() throws Exception {
-        mockMvc.perform(post("/V2/user/register")
+        mockMvc.perform(post("/V2/users/register")
                         .contentType("application/json")
                         .param("register", "true")
                         .param("username", "")
@@ -76,7 +76,7 @@ class UserWebControllerTest {
     @Test
     @DisplayName("Open a page for login")
     void getLoginUserTest() throws Exception {
-        mockMvc.perform(get("/V2/user/login"))
+        mockMvc.perform(get("/V2/users/login"))
                 .andExpectAll(
                         status().isOk(),
                         content().contentType("text/html;charset=UTF-8"),
@@ -87,7 +87,7 @@ class UserWebControllerTest {
     @Test
     @DisplayName("Successful login")
     void postLoginUserWithCorrectDataTest() throws Exception {
-        mockMvc.perform(post("/V2/user/login")
+        mockMvc.perform(post("/V2/users/login")
                         .contentType("application/json")
                         .param("username", "testuser1")
                         .param("password", "qwerTy12"))
@@ -103,7 +103,7 @@ class UserWebControllerTest {
     @Test
     @DisplayName("Fail login")
     void postLoginUserWithIncorrectDataTest() throws Exception {
-        mockMvc.perform(post("/V2/user/login")
+        mockMvc.perform(post("/V2/users/login")
                         .contentType("application/json")
                         .param("username", "")
                         .param("password", "Password"))

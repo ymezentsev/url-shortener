@@ -14,7 +14,6 @@ import ua.goit.urlshortener.url.exceptions.AlreadyExistUrlException;
 import ua.goit.urlshortener.url.exceptions.NotAccessibleException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j

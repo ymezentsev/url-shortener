@@ -11,7 +11,7 @@ import ua.goit.urlshortener.user.CreateUserRequest;
 import static ua.goit.urlshortener.mvc.ConstantsStorage.*;
 
 @Controller
-@RequestMapping("V2/user")
+@RequestMapping("V2/users")
 @RequiredArgsConstructor
 public class UserWebController {
     private final UserWebService userWebService;
