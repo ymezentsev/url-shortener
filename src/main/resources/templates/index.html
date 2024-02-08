@@ -83,11 +83,11 @@
             <div class="col-md-1"></div>
 
             <div class="col mt-4" sec:authorize="isAnonymous()">
-                <a href="/V2/user/register" class="btn btn-success btn-lg">Register</a>
+                <a href="/V2/users/register" class="btn btn-success btn-lg">Register</a>
             </div>
 
             <div class="col mt-4" sec:authorize="isAnonymous()">
-                <a href="/V2/user/login" class="btn btn-success btn-lg">Log in</a>
+                <a href="/V2/users/login" class="btn btn-success btn-lg">Log in</a>
             </div>
 
             <div class="col mt-4" sec:authorize="isAnonymous() or hasAuthority('USER')">
