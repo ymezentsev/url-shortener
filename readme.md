@@ -1,5 +1,5 @@
 # Url Shortener
-(test web-version available here - https://urlshortener-bf7i1l0w.b4a.run/)
+(Test web-version available here - https://urlshortener-bf7i1l0w.b4a.run/)
 
 This project is a REST API service that allows users to
 create and use short URLs. There is also an option to edit a short link for easier
