@@ -29,8 +29,8 @@ class UrlRepositoryTest {
     @DisplayName("Find url by user's id")
     void findByUserIdTest() {
         assertAll(
-                () -> assertEquals(2, urlRepository.findByUserId(1L).size()),
-                () -> assertEquals(0, urlRepository.findByUserId(4L).size())
+                () -> assertEquals(2, urlRepository.findByUserId(2L).size()),
+                () -> assertEquals(0, urlRepository.findByUserId(10L).size())
         );
     }
 
@@ -49,16 +49,16 @@ class UrlRepositoryTest {
     void findActiveUrlsByUserIdTest() {
         assertAll(
                 () -> assertEquals(2,
-                        urlRepository.findActiveUrlsByUserId(1L, LocalDate.now()).size()),
+                        urlRepository.findActiveUrlsByUserId(2L, LocalDate.now()).size()),
                 () -> assertEquals(1,
-                        urlRepository.findActiveUrlsByUserId(3L, LocalDate.now()).size())
+                        urlRepository.findActiveUrlsByUserId(4L, LocalDate.now()).size())
         );
     }
 
     @Test
     @DisplayName("Find all inactive urls for current user")
     void findInactiveUrlsByUserIdTest() {
-        assertEquals(0, urlRepository.findInactiveUrlsByUserId(1L, LocalDate.now()).size());
+        assertEquals(0, urlRepository.findInactiveUrlsByUserId(2L, LocalDate.now()).size());
     }
 
     @Test

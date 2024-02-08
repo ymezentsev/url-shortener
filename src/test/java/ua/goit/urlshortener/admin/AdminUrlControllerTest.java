@@ -46,7 +46,7 @@ class AdminUrlControllerTest {
     void getUrlsForSelectedUserTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
-                .pathParam("userId", 2L)
+                .pathParam("userId", 3L)
                 .when().get("/{userId}")
                 .then()
                 .statusCode(200)
@@ -59,7 +59,7 @@ class AdminUrlControllerTest {
     void getActiveUsersUrlsTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
-                .pathParam("userId", 2L)
+                .pathParam("userId", 3L)
                 .when().get("/{userId}/active")
                 .then()
                 .statusCode(200)
@@ -72,7 +72,7 @@ class AdminUrlControllerTest {
     void getInactiveUsersUrlsTest() {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
-                .pathParam("userId", 2L)
+                .pathParam("userId", 3L)
                 .when().get("/{userId}/inactive")
                 .then()
                 .statusCode(200)

@@ -48,7 +48,7 @@ class AdminUserWebServiceTest {
     @DisplayName("Fail delete user")
     void deleteUserWithIncorrectDataTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ModelAndView deleteUserWebModel = adminUserWebService.deleteUser(1L, authentication);
+        ModelAndView deleteUserWebModel = adminUserWebService.deleteUser(2L, authentication);
         assertTrue(deleteUserWebModel.getModel().containsKey(ATTRIBUTE_ERRORS));
     }
 
@@ -64,7 +64,7 @@ class AdminUserWebServiceTest {
     @DisplayName("Fail change user's role")
     void changeUserRoleWithIncorrectDataTest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ModelAndView changeUserRoleWebModel = adminUserWebService.changeUserRole(1L, authentication);
+        ModelAndView changeUserRoleWebModel = adminUserWebService.changeUserRole(2L, authentication);
         assertTrue(changeUserRoleWebModel.getModel().containsKey(ATTRIBUTE_ERRORS));
     }
 

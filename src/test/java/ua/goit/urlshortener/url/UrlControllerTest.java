@@ -230,7 +230,7 @@ class UrlControllerTest {
     }
 
     private Long getUrlId() {
-        return urlRepository.findByUserId(1L).stream()
+        return urlRepository.findByUserId(2L).stream()
                 .map(UrlEntity::getId)
                 .findFirst()
                 .orElseThrow();
