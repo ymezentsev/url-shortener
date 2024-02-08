@@ -64,7 +64,7 @@ class AdminUserControllerTest {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUserIdByUsername("testuser1"))
-                .when().post("/edit/{id}")
+                .when().patch("/{id}")
                 .then()
                 .statusCode(200);
     }
@@ -75,7 +75,7 @@ class AdminUserControllerTest {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUserIdByUsername("testuser1"))
-                .when().delete("/delete/{id}")
+                .when().delete("/{id}")
                 .then()
                 .statusCode(200);
     }

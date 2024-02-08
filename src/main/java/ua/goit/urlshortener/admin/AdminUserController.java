@@ -24,14 +24,14 @@ public class AdminUserController {
         return adminService.getAllUsers();
     }
 
-    @PostMapping("/edit/{id}")
+    @PatchMapping("{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Change user's role")
     public void changeUserRole(@PathVariable("id") Long id, Authentication authentication) {
         adminService.changeUserRole(id, authentication);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Delete user")
     public void deleteUser(@PathVariable("id") Long id, Authentication authentication) {
