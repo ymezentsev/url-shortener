@@ -5,6 +5,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.goit.urlshortener.jwt.JwtUtils;
@@ -19,6 +21,7 @@ public class UserService {
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
     public UserDto findByUsername(String username) {
         UserEntity userEntity = userRepository.findByUsername(username)
@@ -48,6 +51,8 @@ public class UserService {
                         userRequest.getUsername(), userRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtUtils.generateJwtToken(authentication);
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userRequest.getUsername());
+        return jwtUtils.generateJwtToken(userDetails);
     }
 }

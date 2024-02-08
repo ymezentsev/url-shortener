@@ -8,7 +8,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +24,7 @@ public class JwtUtils {
     @Value("${jwt.lifetime}")
     private Duration jwtLifetime;
 
-    public String generateJwtToken(Authentication authentication) {
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
+    public String generateJwtToken(UserDetails userDetails) {
         return Jwts.builder()
                 .subject((userDetails.getUsername()))
                 .claim("Authorities", userDetails.getAuthorities())

@@ -1,5 +1,6 @@
 package ua.goit.urlshortener.jwt;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,7 @@ class UserDetailsServiceImplTest {
 
 
     @Test
+    @DisplayName("Successful load user by username")
     void loadUserByUsernameTest() {
         UserDetails userDetails = userDetailsService.loadUserByUsername("testadmin");
         assertAll(
@@ -34,6 +36,7 @@ class UserDetailsServiceImplTest {
     }
 
     @Test
+    @DisplayName("Fail load user by username")
     void loadUserByUsernameThrowUsernameNotFoundExceptionTest() {
         assertThrows(UsernameNotFoundException.class,
                 () -> userDetailsService.loadUserByUsername("test"));

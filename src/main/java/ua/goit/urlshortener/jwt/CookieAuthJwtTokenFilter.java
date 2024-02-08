@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,10 +49,11 @@ public final class CookieAuthJwtTokenFilter extends OncePerRequestFilter {
                 && !parameterMap.containsKey("register")) {
             try {
                 log.info("Generate jwt token");
-                Authentication authentication = authenticationManager.authenticate(
+                authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(username, password));
 
-                String token = jwtUtils.generateJwtToken(authentication);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                String token = jwtUtils.generateJwtToken(userDetails);
 
                 Cookie jwtCookie = new Cookie("jwtToken", token);
                 jwtCookie.setHttpOnly(true);
