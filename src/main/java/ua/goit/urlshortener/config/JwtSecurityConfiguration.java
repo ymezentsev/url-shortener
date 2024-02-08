@@ -4,6 +4,7 @@ package ua.goit.urlshortener.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -55,13 +56,7 @@ public class JwtSecurityConfiguration {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/V1/urls/create",
-                                "/V1/urls/edit/**",
-                                "/V1/urls/delete/**",
-                                "/V1/urls/prolongation/**",
-                                "/V1/urls/current",
-                                "/V1/urls/current/active",
-                                "/V1/urls/current/inactive",
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/V1/urls/current/**",
                                 "/V2/urls/user",
                                 "/V2/urls/list/user",
                                 "/V2/urls/list/auth",
@@ -72,6 +67,10 @@ public class JwtSecurityConfiguration {
                                 "/V2/urls/prolongation/**",
                                 "/V2/urls/create/**"
                         ).authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/V1/urls/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/V1/urls").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/V1/urls/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/V1/urls/**").authenticated()
                         .requestMatchers("V1/admin/users/**",
                                 "V1/admin/urls/**",
                                 "V2/admin/urls/**",

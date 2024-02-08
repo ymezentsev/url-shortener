@@ -28,7 +28,7 @@ public class UrlController {
         return urlService.getAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Create short url")
     public UrlDto createUrl(@Valid @RequestBody CreateUrlRequest request, Authentication authentication) {
@@ -42,7 +42,7 @@ public class UrlController {
         return urlService.getAllUrlUser(authentication);
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Url edit")
     public void updateUrl(@PathVariable("id") Long id,
@@ -51,14 +51,14 @@ public class UrlController {
         urlService.updateUrl(id, request, authentication);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Delete url")
     public void deleteUrl(@PathVariable("id") Long id, Authentication authentication) {
         urlService.deleteById(id, authentication);
     }
 
-    @PostMapping("/prolongation/{id}")
+    @PatchMapping("/{id}")
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Prolongation url's expiration date")
     public void prolongUrl(@PathVariable("id") Long id, Authentication authentication) {

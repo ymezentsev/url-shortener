@@ -70,7 +70,7 @@ class UrlControllerTest {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .body(createUrlRequest)
-                .when().post("/create")
+                .when().post("")
                 .then()
                 .statusCode(200)
                 .assertThat()
@@ -86,7 +86,7 @@ class UrlControllerTest {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .body(createUrlRequest)
-                .when().post("/create")
+                .when().post("")
                 .then()
                 .statusCode(400)
                 .assertThat()
@@ -116,7 +116,7 @@ class UrlControllerTest {
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
                 .body(updateUrlRequest)
-                .when().post("/edit/{id}")
+                .when().put("/{id}")
                 .then()
                 .statusCode(200);
     }
@@ -131,7 +131,7 @@ class UrlControllerTest {
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
                 .body(updateUrlRequest)
-                .when().post("/edit/{id}")
+                .when().put("/{id}")
                 .then()
                 .statusCode(400)
                 .assertThat()
@@ -145,7 +145,7 @@ class UrlControllerTest {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
-                .when().delete("/delete/{id}")
+                .when().delete("/{id}")
                 .then()
                 .statusCode(200);
     }
@@ -157,7 +157,7 @@ class UrlControllerTest {
         given().contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token.get())
                 .pathParam("id", getUrlId())
-                .when().post("/prolongation/{id}")
+                .when().patch("/{id}")
                 .then()
                 .statusCode(200);
     }
